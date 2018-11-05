@@ -233,9 +233,6 @@
             $CLICSHOPPING_Order = Registry::get('Order');
 
             if ($CLICSHOPPING_ShoppingCart->get_content_type() != 'virtual') {
-                $total_weight = $CLICSHOPPING_ShoppingCart->show_weight();
-                $total_count = $CLICSHOPPING_ShoppingCart->getCountContents();
-
 // load all enabled shipping modules
                 if (!Registry::exists('Shipping')) {
                   Registry::set('Shipping', new Shipping());
@@ -365,7 +362,7 @@
       $CLICSHOPPING_ShoppingCart = Registry::get('ShoppingCart');
       $CLICSHOPPING_Customer = Registry::get('Customer');
       $CLICSHOPPING_Mail = Registry::get('Mail');
-      $CLICSHOPPING_Navigation = Registry::get('Navigation');
+      $CLICSHOPPING_NavigationHistory = Registry::get('NavigationHistory');
 
       if (($CLICSHOPPING_ShoppingCart->getCountContents() < 1) || !isset($_GET['token']) || empty($_GET['token']) || !isset($_SESSION['appPayPalEcSecret'])) {
         CLICSHOPPING::redirect('index.php', 'Cart');
@@ -499,7 +496,7 @@
               if ($force_redirect === true) {
                 $CLICSHOPPING_MessageStack->add('login', $this->pm->app->getDef('module_ec_error_local_login_required'), 'warning');
 
-                $CLICSHOPPING_Navigation->setSnapshot();
+                $CLICSHOPPING_NavigationHistory->setSnapshot();
 
                 $this->file = 'login_redirect.php';
 
@@ -648,9 +645,6 @@
             $CLICSHOPPING_Order = Registry::get('Order');
 
              if ($CLICSHOPPING_ShoppingCart->get_content_type() != 'virtual') {
-                $total_weight = $CLICSHOPPING_ShoppingCart->show_weight();
-                $total_count = $CLICSHOPPING_ShoppingCart->getCountContents();
-
 // load all enabled shipping modules
                Registry::set('Shipping', new Shipping());
                $CLICSHOPPING_Shipping = Registry::get('Shipping');
@@ -922,9 +916,6 @@
 
 
             if ($CLICSHOPPING_ShoppingCart->get_content_type() != 'virtual') {
-                $total_weight = $CLICSHOPPING_ShoppingCart->show_weight();
-                $total_count = $CLICSHOPPING_ShoppingCart->getCountContents();
-
 // load all enabled shipping modules
                 Registry::set('Shipping', new Shipping());
                 $CLICSHOPPING_Shipping = Registry::get('Shipping');
