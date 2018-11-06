@@ -41,7 +41,7 @@
 
 
       if (!$this->pm->check() || !$this->pm->enabled) {
-        CLICSHOPPING::redirect('index.php', 'Cart');
+        CLICSHOPPING::redirect(null, 'Cart');
       }
 
       $this->lang->loadDefinitions('Shop/create_account');
@@ -111,7 +111,7 @@
           break;
       }
 
-      CLICSHOPPING::redirect('index.php', 'Cart');
+      CLICSHOPPING::redirect(null, 'Cart');
     }
 
     protected function doCancel() {
@@ -131,7 +131,7 @@
           unset($_SESSION['billto']);
       }
 
-      CLICSHOPPING::redirect('index.php', 'Cart');
+      CLICSHOPPING::redirect(null, 'Cart');
     }
 
     protected function doCallbackSet()  {
@@ -365,7 +365,7 @@
       $CLICSHOPPING_NavigationHistory = Registry::get('NavigationHistory');
 
       if (($CLICSHOPPING_ShoppingCart->getCountContents() < 1) || !isset($_GET['token']) || empty($_GET['token']) || !isset($_SESSION['appPayPalEcSecret'])) {
-        CLICSHOPPING::redirect('index.php', 'Cart');
+        CLICSHOPPING::redirect(null, 'Cart');
       }
 
       if (!isset($_SESSION['appPayPalEcResult']) || ($_SESSION['appPayPalEcResult']['TOKEN'] != $_GET['token'])) {
@@ -394,11 +394,11 @@
       if ($pass === true) {
         if (CLICSHOPPING_APP_PAYPAL_GATEWAY == '1') { // PayPal
           if ($_SESSION['appPayPalEcResult']['PAYMENTREQUEST_0_CUSTOM'] != $_SESSION['appPayPalEcSecret']) {
-              CLICSHOPPING::redirect('index.php', 'Cart');
+              CLICSHOPPING::redirect(null, 'Cart');
           }
         } else { // Payflow
           if ($_SESSION['appPayPalEcResult']['CUSTOM'] != $_SESSION['appPayPalEcSecret']) {
-              CLICSHOPPING::redirect('index.php', 'Cart');
+              CLICSHOPPING::redirect(null, 'Cart');
           }
         }
 
@@ -501,7 +501,7 @@
                 $this->file = 'login_redirect.php';
 
                 $this->data = [
-                                'login_url' => CLICSHOPPING::link('index.php', 'Account&Login'),
+                                'login_url' => CLICSHOPPING::link(null, 'Account&Login'),
                                 'email_address' => $email_address
                               ];
 
@@ -724,7 +724,7 @@
 
                     $_SESSION['appPayPalEcRightTurn'] = true;
 
-                    CLICSHOPPING::redirect('index.php', 'Checkout&ShippingAddress');
+                    CLICSHOPPING::redirect(null, 'Checkout&ShippingAddress');
                   }
                 }
 
@@ -761,7 +761,7 @@
                   if (isset($quote['error'])) {
                     unset($_SESSION['shipping']);
 
-                    CLICSHOPPING::redirect('index.php', 'Checkout&Shipping');
+                    CLICSHOPPING::redirect(null, 'Checkout&Shipping');
                 } else {
                     if ((isset($quote[0]['methods'][0]['title'])) && (isset($quote[0]['methods'][0]['cost']))) {
                       $_SESSION['shipping'] = [
@@ -788,11 +788,11 @@
                 $_POST['conditions'] = 1;
               }
 
-              CLICSHOPPING::redirect('index.php', 'Checkout&Confirmation');
+              CLICSHOPPING::redirect(null, 'Checkout&Confirmation');
             } else {
               $_SESSION['appPayPalEcRightTurn'] = true;
 
-              CLICSHOPPING::redirect('index.php', 'Checkout&Shipping');
+              CLICSHOPPING::redirect(null, 'Checkout&Shipping');
             }
         } else {
           if (CLICSHOPPING_APP_PAYPAL_GATEWAY == '1') { // PayPal
@@ -801,7 +801,7 @@
             $CLICSHOPPING_MessageStack->add('header', $_SESSION['appPayPalEcResult']['CLICSHOPPING_ERROR_MESSAGE'], 'error');
           }
 
-          CLICSHOPPING::redirect('index.php', 'Cart');
+          CLICSHOPPING::redirect(null, 'Cart');
         }
     }
 
@@ -814,7 +814,7 @@
 
 // if there is nothing in the customers cart, redirect them to the shopping cart page
       if ($CLICSHOPPING_ShoppingCart->getCountContents() < 1) {
-        CLICSHOPPING::redirect('index.php', 'Cart');
+        CLICSHOPPING::redirect(null, 'Cart');
       }
 
       if (CLICSHOPPING_APP_PAYPAL_EC_STATUS == '1') {
@@ -873,7 +873,7 @@
                 $item_params['L_PAYMENTREQUEST_0_AMT' . $line_item_no] = $product_price;
                 $item_params['L_PAYMENTREQUEST_0_NUMBER' . $line_item_no] = $product['id'];
                 $item_params['L_PAYMENTREQUEST_0_QTY' . $line_item_no] = $product['qty'];
-                $item_params['L_PAYMENTREQUEST_0_ITEMURL' . $line_item_no] = CLICSHOPPING::link('index.php', 'Products&Description&products_id=' . $product['id'], false);
+                $item_params['L_PAYMENTREQUEST_0_ITEMURL' . $line_item_no] = CLICSHOPPING::link(null, 'Products&Description&products_id=' . $product['id'], false);
 
                 if ((DOWNLOAD_ENABLED == 'true') && isset($product['attributes'])) {
                   $item_params['L_PAYMENTREQUEST_0_ITEMCATEGORY' . $line_item_no] = $this->pm->getProductType($product['id'], $product['attributes']);
@@ -983,7 +983,7 @@
 
                         $CLICSHOPPING_MessageStack->add('index.php', 'Checkout&ShippingAddress&' . $this->pm->app->getDef('module_ec_error_no_shipping_available'), 'error');
 
-                        CLICSHOPPING::redirect('index.php', 'Checkout&ShippingAddress');
+                        CLICSHOPPING::redirect(null, 'Checkout&ShippingAddress');
                     }
                 }
             }
@@ -1026,7 +1026,7 @@
               $item_params['L_SHIPPINGOPTIONISDEFAULT' . $default_shipping] = 'true';
 
 // Instant Update
-              $item_params['CALLBACK'] = CLICSHOPPING::link('index.php', 'order&callback&paypal&ec&action=callbackSet', false, false);
+              $item_params['CALLBACK'] = CLICSHOPPING::link(null, 'order&callback&paypal&ec&action=callbackSet', false, false);
               $item_params['CALLBACKTIMEOUT'] = '6';
               $item_params['CALLBACKVERSION'] = $this->pm->api_version;
 
@@ -1147,7 +1147,7 @@
 
             HTTP::redirect($paypal_url . 'token=' . $response_array['TOKEN']);
           } else {
-            CLICSHOPPING::redirect('index.php', 'Cart&error_message=' . stripslashes($response_array['L_LONGMESSAGE0']));
+            CLICSHOPPING::redirect(null, 'Cart&error_message=' . stripslashes($response_array['L_LONGMESSAGE0']));
           }
       } else { // Payflow
         $params['CUSTOM'] = $_SESSION['appPayPalEcSecret'];
@@ -1164,7 +1164,7 @@
         if ($response_array['RESULT'] == '0') {
           HTTP::redirect($paypal_url . 'token=' . $response_array['TOKEN']);
         } else {
-          CLICSHOPPING::redirect('index.php', 'Cart&error_message=' . urlencode($response_array['CLICSHOPPING_ERROR_MESSAGE']));
+          CLICSHOPPING::redirect(null, 'Cart&error_message=' . urlencode($response_array['CLICSHOPPING_ERROR_MESSAGE']));
         }
       }
     }
