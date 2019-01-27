@@ -24,6 +24,8 @@ Activate the module in Payment
 See Marketplace for all informations
 
  All informations about the ClicShopping
+ 
+ Download ClicShopping : https://github.com/ClicShopping/ClicShopping_V3/archive/master.zip
 
  Community : https://www.clicshopping.org
 
