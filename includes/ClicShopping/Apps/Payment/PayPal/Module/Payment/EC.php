@@ -508,8 +508,8 @@ EOD;
 
       $this->app->db->save('orders_status_history', $sql_data_array);
 
-      $CLICSHOPPING_Hooks->call('CheckoutProcess','RentCommission');
-      $CLICSHOPPING_Hooks->call('CheckoutProcess','ERP');
+      $CLICSHOPPING_Hooks->call('CheckoutProcess','CheckoutProcessRentCommission');
+      $CLICSHOPPING_Hooks->call('CheckoutProcess','CheckoutProcessERP');
 
       unset($_SESSION['appPayPalEcResult']);
       unset($_SESSION['appPayPalEcSecret']);
@@ -634,8 +634,8 @@ EOD;
 
         $this->app->db->save('orders_status_history', $sql_data_array);
 
-        $CLICSHOPPING_Hooks->call('CheckoutProcess','RentCommission');
-        $CLICSHOPPING_Hooks->call('CheckoutProcess','ERP');
+        $CLICSHOPPING_Hooks->call('CheckoutProcess','CheckoutProcessRentCommission');
+        $CLICSHOPPING_Hooks->call('CheckoutProcess','CheckoutProcessERP');
       }
     }
 
