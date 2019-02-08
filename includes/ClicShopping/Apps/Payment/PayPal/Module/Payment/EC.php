@@ -487,6 +487,7 @@ EOD;
 
       $CLICSHOPPING_Order = Registry::get('Order');
       $CLICSHOPPING_Hooks = Registry::get('Hooks');
+      $CLICSHOPPING_Template = Registry::get('Template');
 
       $this->lastInsertOrderId = $CLICSHOPPING_Order->getLastOrderId();
 
@@ -508,8 +509,15 @@ EOD;
 
       $this->app->db->save('orders_status_history', $sql_data_array);
 
-      $CLICSHOPPING_Hooks->call('CheckoutProcess','CheckoutProcessRentCommission');
-      $CLICSHOPPING_Hooks->call('CheckoutProcess','CheckoutProcessERP');
+      $source_folder = CLICSHOPPING::getConfig('dir_root', 'Shop') . 'includes/Module/Hooks/Shop/CheckoutProcess/';
+
+      $files_get = $CLICSHOPPING_Template->getSpecificFiles($source_folder, 'CheckoutProcess*');
+
+      foreach ($files_get as $value) {
+        if (!empty($value['name'])) {
+          $CLICSHOPPING_Hooks->call('CheckoutProcess', $value['name']);
+        }
+      }
 
       unset($_SESSION['appPayPalEcResult']);
       unset($_SESSION['appPayPalEcSecret']);
@@ -520,6 +528,7 @@ EOD;
 
       $CLICSHOPPING_Order = Registry::get('Order');
       $CLICSHOPPING_Hooks = Registry::get('Hooks');
+      $CLICSHOPPING_Template = Registry::get('Template');
 
       $pp_result = 'Transaction ID: ' . HTML::outputProtected($response_array['PNREF']) . "\n" .
                    'Gateway: Payflow' . "\n" .
@@ -634,8 +643,15 @@ EOD;
 
         $this->app->db->save('orders_status_history', $sql_data_array);
 
-        $CLICSHOPPING_Hooks->call('CheckoutProcess','CheckoutProcessRentCommission');
-        $CLICSHOPPING_Hooks->call('CheckoutProcess','CheckoutProcessERP');
+        $source_folder = CLICSHOPPING::getConfig('dir_root', 'Shop') . 'includes/Module/Hooks/Shop/CheckoutProcess/';
+
+        $files_get = $CLICSHOPPING_Template->getSpecificFiles($source_folder, 'CheckoutProcess*');
+
+        foreach ($files_get as $value) {
+          if (!empty($value['name'])) {
+            $CLICSHOPPING_Hooks->call('CheckoutProcess', $value['name']);
+          }
+        }
       }
     }
 
