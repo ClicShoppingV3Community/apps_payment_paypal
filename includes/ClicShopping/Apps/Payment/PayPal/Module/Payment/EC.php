@@ -62,7 +62,7 @@
             }
           }
         } else {
-          if (CLICSHOPPING_APP_PAYPAL_EC_NO_AUTHORIZE == 'True' && $CLICSHOPPING_Customer->getCustomersGroupID() == 0) {
+          if (defined('CLICSHOPPING_APP_PAYPAL_EC_NO_AUTHORIZE') && CLICSHOPPING_APP_PAYPAL_EC_NO_AUTHORIZE == 'True' && $CLICSHOPPING_Customer->getCustomersGroupID() == 0) {
             if ($CLICSHOPPING_Customer->getCustomersGroupID() == 0) {
 
               if (CLICSHOPPING_APP_PAYPAL_EC_STATUS == '0' || CLICSHOPPING_APP_PAYPAL_EC_STATUS == '1') {
