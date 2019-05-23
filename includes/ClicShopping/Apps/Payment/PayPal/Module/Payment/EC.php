@@ -1,13 +1,13 @@
 <?php
-/**
- *
- *  @copyright 2008 - https://www.clicshopping.org
- *  @Brand : ClicShopping(Tm) at Inpi all right Reserved
- *  @Licence GPL 2 & MIT
- *  @licence MIT - Portion of osCommerce 2.4
- *  @Info : https://www.clicshopping.org/forum/trademark/
- *
- */
+  /**
+   *
+   * @copyright 2008 - https://www.clicshopping.org
+   * @Brand : ClicShopping(Tm) at Inpi all right Reserved
+   * @Licence GPL 2 & MIT
+   * @licence MIT - Portion of osCommerce 2.4
+   * @Info : https://www.clicshopping.org/forum/trademark/
+   *
+   */
 
   namespace ClicShopping\Apps\Payment\PayPal\Module\Payment;
 
@@ -20,7 +20,8 @@
 
   use ClicShopping\Sites\Common\B2BCommon;
 
-  class EC implements \ClicShopping\OM\Modules\PaymentInterface {
+  class EC implements \ClicShopping\OM\Modules\PaymentInterface
+  {
 
     public $code;
     public $title;
@@ -28,7 +29,8 @@
     public $enabled;
     public $app;
 
-    public function __construct() {
+    public function __construct()
+    {
       $CLICSHOPPING_Customer = Registry::get('Customer');
 
       if (Registry::exists('Order')) {
@@ -54,10 +56,10 @@
 
       if (defined('CLICSHOPPING_APP_PAYPAL_EC_STATUS')) {
         if ($CLICSHOPPING_Customer->getCustomersGroupID() != 0) {
-          if ( B2BCommon::getPaymentUnallowed($this->code) ) {
+          if (B2BCommon::getPaymentUnallowed($this->code)) {
             if (CLICSHOPPING_APP_PAYPAL_EC_STATUS == '0' || CLICSHOPPING_APP_PAYPAL_EC_STATUS == '1') {
               $this->enabled = true;
-            }  else {
+            } else {
               $this->enabled = false;
             }
           }
@@ -67,7 +69,7 @@
 
               if (CLICSHOPPING_APP_PAYPAL_EC_STATUS == '0' || CLICSHOPPING_APP_PAYPAL_EC_STATUS == '1') {
                 $this->enabled = true;
-              }  else {
+              } else {
                 $this->enabled = false;
               }
             }
@@ -79,28 +81,28 @@
 
       $this->order_status = defined('CLICSHOPPING_APP_PAYPAL_EC_ORDER_STATUS_ID') && ((int)CLICSHOPPING_APP_PAYPAL_EC_ORDER_STATUS_ID > 0) ? (int)CLICSHOPPING_APP_PAYPAL_EC_ORDER_STATUS_ID : 0;
 
-      if ( defined('CLICSHOPPING_APP_PAYPAL_EC_STATUS') ) {
-        if ( CLICSHOPPING_APP_PAYPAL_EC_STATUS == '0' ) {
+      if (defined('CLICSHOPPING_APP_PAYPAL_EC_STATUS')) {
+        if (CLICSHOPPING_APP_PAYPAL_EC_STATUS == '0') {
           $this->title .= ' [Sandbox]';
           $this->public_title .= ' (' . $this->app->vendor . '\\' . $this->app->code . '\\' . $this->code . '; Sandbox)';
         }
       }
 
-      if ( !function_exists('curl_init') ) {
+      if (!function_exists('curl_init')) {
         $this->description .= '<div class="alert alert-warning" role="alert">' . $this->app->getDef('module_ec_error_curl') . '</div>';
 
         $this->enabled = false;
       }
 
-      if ( $this->enabled === true ) {
-        if ( CLICSHOPPING_APP_PAYPAL_GATEWAY == '1' ) { // PayPal
-          if ( !$this->app->hasCredentials('EC') ) {
+      if ($this->enabled === true) {
+        if (CLICSHOPPING_APP_PAYPAL_GATEWAY == '1') { // PayPal
+          if (!$this->app->hasCredentials('EC')) {
             $this->description .= '<div class="alert alert-warning" role="alert">' . $this->app->getDef('module_ec_error_credentials') . '</div>';
 
             $this->enabled = false;
           }
         } else { // Payflow
-          if ( !$this->app->hasCredentials('EC', 'payflow') ) {
+          if (!$this->app->hasCredentials('EC', 'payflow')) {
             $this->description .= '<div class="alert alert-warning" role="alert">' . $this->app->getDef('module_ec_error_credentials_payflow') . '</div>';
 
             $this->enabled = false;
@@ -108,23 +110,23 @@
         }
       }
 
-      if ( $this->enabled === true ) {
-        if ( isset($CLICSHOPPING_Order) && is_object($CLICSHOPPING_Order) ) {
+      if ($this->enabled === true) {
+        if (isset($CLICSHOPPING_Order) && is_object($CLICSHOPPING_Order)) {
           $this->update_status();
         }
       }
 
-      if ( isset($_GET['Cart'])) {
-        if ( (CLICSHOPPING_APP_PAYPAL_GATEWAY == '1') && (CLICSHOPPING_APP_PAYPAL_EC_CHECKOUT_FLOW == '1') ) {
+      if (isset($_GET['Cart'])) {
+        if ((CLICSHOPPING_APP_PAYPAL_GATEWAY == '1') && (CLICSHOPPING_APP_PAYPAL_EC_CHECKOUT_FLOW == '1')) {
           header('X-UA-Compatible: IE=edge', true);
         }
       }
 
 // When changing the shipping address due to no shipping rates being available, head straight to the checkout confirmation page
-      if ( (isset($_GET['Checkout']) && isset($_GET['Billing'])) && isset($_SESSION['appPayPalEcRightTurn']) ) {
+      if ((isset($_GET['Checkout']) && isset($_GET['Billing'])) && isset($_SESSION['appPayPalEcRightTurn'])) {
         unset($_SESSION['appPayPalEcRightTurn']);
 
-        if ( isset($_SESSION['payment']) && ($_SESSION['payment'] == $this->app->vendor . '\\' . $this->app->code . '\\' . $this->code) ) {
+        if (isset($_SESSION['payment']) && ($_SESSION['payment'] == $this->app->vendor . '\\' . $this->app->code . '\\' . $this->code)) {
 // Sales condition, pass the verification
 // bug the data is not sent
           if (DISPLAY_CONDITIONS_ON_CHECKOUT == 'true') {
@@ -136,17 +138,18 @@
       }
     }
 
-    public function update_status() {
+    public function update_status()
+    {
       $CLICSHOPPING_Order = Registry::get('Order');
 
-      if ( ($this->enabled === true) && ((int)CLICSHOPPING_APP_PAYPAL_EC_ZONE > 0) ) {
+      if (($this->enabled === true) && ((int)CLICSHOPPING_APP_PAYPAL_EC_ZONE > 0)) {
         $check_flag = false;
 
         $Qcheck = $this->app->db->get('zones_to_geo_zones', 'zone_id', ['geo_zone_id' => CLICSHOPPING_APP_PAYPAL_EC_ZONE,
-                                                                        'zone_country_id' => $CLICSHOPPING_Order->billing['country']['id']
-                                                                        ],
-                                                                        'zone_id'
-                                  );
+          'zone_country_id' => $CLICSHOPPING_Order->billing['country']['id']
+        ],
+          'zone_id'
+        );
 
         while ($Qcheck->fetch()) {
           if (($Qcheck->valueInt('zone_id') < 1) || ($Qcheck->valueInt('zone_id') == $CLICSHOPPING_Order->delivery['zone_id'])) {
@@ -161,7 +164,8 @@
       }
     }
 
-    public function checkout_initialization_method() {
+    public function checkout_initialization_method()
+    {
       $CLICSHOPPING_Template = Registry::get('Template');
       $CLICSHOPPING_ShoppingCart = Registry::get('ShoppingCart');
 
@@ -301,11 +305,13 @@ EOD;
       return $string;
     }
 
-    public function javascript_validation() {
+    public function javascript_validation()
+    {
       return false;
     }
 
-    public function selection() {
+    public function selection()
+    {
       if (CLICSHOPPING_APP_PAYPAL_EC_LOGO == 'True') {
         $this->public_title = $this->public_title . '&nbsp;&nbsp;&nbsp;<img src="https://www.paypalobjects.com/webstatic/mktg/Logo/pp-logo-100px.png" border="0" alt="PayPal Logo" style="padding: 3px;" />';
       }
@@ -313,24 +319,25 @@ EOD;
       return array('id' => $this->app->vendor . '\\' . $this->app->code . '\\' . $this->code, 'module' => $this->public_title);
     }
 
-    public function pre_confirmation_check() {
-       $CLICSHOPPING_Order = Registry::get('Order');
+    public function pre_confirmation_check()
+    {
+      $CLICSHOPPING_Order = Registry::get('Order');
 
 
-      if ( !isset($_SESSION['appPayPalEcResult']) ) {
+      if (!isset($_SESSION['appPayPalEcResult'])) {
         CLICSHOPPING::redirect(null, 'order&callback&paypal&ec');
       }
 
-      if ( CLICSHOPPING_APP_PAYPAL_GATEWAY == '1' ) { // PayPal
-        if ( !in_array($_SESSION['appPayPalEcResult']['ACK'], array('Success', 'SuccessWithWarning')) ) {
+      if (CLICSHOPPING_APP_PAYPAL_GATEWAY == '1') { // PayPal
+        if (!in_array($_SESSION['appPayPalEcResult']['ACK'], array('Success', 'SuccessWithWarning'))) {
           CLICSHOPPING::redirect(null, 'Cart&error_message=' . stripslashes($_SESSION['appPayPalEcResult']['L_LONGMESSAGE0']));
-        } elseif ( !isset($_SESSION['appPayPalEcSecret']) || ($_SESSION['appPayPalEcResult']['PAYMENTREQUEST_0_CUSTOM'] != $_SESSION['appPayPalEcSecret']) ) {
+        } elseif (!isset($_SESSION['appPayPalEcSecret']) || ($_SESSION['appPayPalEcResult']['PAYMENTREQUEST_0_CUSTOM'] != $_SESSION['appPayPalEcSecret'])) {
           CLICSHOPPING::redirect(null, 'Cart');
         }
       } else { // Payflow
         if ($_SESSION['appPayPalEcResult']['RESULT'] != '0') {
           CLICSHOPPING::redirect(null, 'Cart&error_message=' . urlencode($_SESSION['appPayPalEcResult']['CLICSHOPPING_ERROR_MESSAGE']));
-        } elseif ( !isset($_SESSION['appPayPalEcSecret']) || ($_SESSION['appPayPalEcResult']['CUSTOM'] != $_SESSION['appPayPalEcSecret']) ) {
+        } elseif (!isset($_SESSION['appPayPalEcSecret']) || ($_SESSION['appPayPalEcResult']['CUSTOM'] != $_SESSION['appPayPalEcSecret'])) {
           CLICSHOPPING::redirect(null, 'Cart');
         }
       }
@@ -338,7 +345,8 @@ EOD;
       $CLICSHOPPING_Order->info['payment_method'] = '<img src="https://www.paypalobjects.com/webstatic/mktg/Logo/pp-logo-100px.png" border="0" alt="PayPal Logo" style="padding: 3px;" />';
     }
 
-    public function confirmation() {
+    public function confirmation()
+    {
       if (!isset($_SESSION['comments'])) {
         $_SESSION['comments'] = null;
       }
@@ -347,36 +355,39 @@ EOD;
 
       if (empty($_SESSION['comments'])) {
         $confirmation = array('fields' => array(array('title' => $this->app->getDef('module_ec_field_comments'),
-                                                      'field' => HTML::textareaField('ppecomments', '', '60', '5', 'class="form-control"'))));
+          'field' => HTML::textareaField('ppecomments', '', '60', '5', 'class="form-control"'))));
       }
 
       return $confirmation;
     }
 
-    public function process_button() {
+    public function process_button()
+    {
       return false;
     }
 
-    public function before_process() {
-      if ( CLICSHOPPING_APP_PAYPAL_GATEWAY == '1' ) {
+    public function before_process()
+    {
+      if (CLICSHOPPING_APP_PAYPAL_GATEWAY == '1') {
         $this->before_process_paypal();
       } else {
         $this->before_process_payflow();
       }
     }
 
-    public function before_process_paypal() {
+    public function before_process_paypal()
+    {
       global $response_array;
 
       $CLICSHOPPING_Order = Registry::get('Order');
       $CLICSHOPPING_Address = Registry::get('Address');
 
-      if ( !isset($_SESSION['appPayPalEcResult']) ) {
+      if (!isset($_SESSION['appPayPalEcResult'])) {
         CLICSHOPPING::redirect(null, 'order&callback&paypal&ec');
       }
 
-      if ( in_array($_SESSION['appPayPalEcResult']['ACK'], array('Success', 'SuccessWithWarning')) ) {
-        if ( !isset($_SESSION['appPayPalEcSecret']) || ($_SESSION['appPayPalEcResult']['PAYMENTREQUEST_0_CUSTOM'] != $_SESSION['appPayPalEcSecret']) ) {
+      if (in_array($_SESSION['appPayPalEcResult']['ACK'], array('Success', 'SuccessWithWarning'))) {
+        if (!isset($_SESSION['appPayPalEcSecret']) || ($_SESSION['appPayPalEcResult']['PAYMENTREQUEST_0_CUSTOM'] != $_SESSION['appPayPalEcSecret'])) {
           CLICSHOPPING::redirect(null, 'Cart');
         }
       } else {
@@ -392,9 +403,9 @@ EOD;
       }
 
       $params = array('TOKEN' => $_SESSION['appPayPalEcResult']['TOKEN'],
-                      'PAYERID' => $_SESSION['appPayPalEcResult']['PAYERID'],
-                      'PAYMENTREQUEST_0_AMT' => $this->app->formatCurrencyRaw($CLICSHOPPING_Order->info['total']),
-                      'PAYMENTREQUEST_0_CURRENCYCODE' => $CLICSHOPPING_Order->info['currency']);
+        'PAYERID' => $_SESSION['appPayPalEcResult']['PAYERID'],
+        'PAYMENTREQUEST_0_AMT' => $this->app->formatCurrencyRaw($CLICSHOPPING_Order->info['total']),
+        'PAYMENTREQUEST_0_CURRENCYCODE' => $CLICSHOPPING_Order->info['currency']);
 
       if (is_numeric($_SESSION['sendto']) && ($_SESSION['sendto'] > 0)) {
         $params['PAYMENTREQUEST_0_SHIPTONAME'] = $CLICSHOPPING_Order->delivery['firstname'] . ' ' . $CLICSHOPPING_Order->delivery['lastname'];
@@ -408,9 +419,9 @@ EOD;
 
       $response_array = $this->app->getApiResult('EC', 'DoExpressCheckoutPayment', $params);
 
-      if ( !in_array($response_array['ACK'], array('Success', 'SuccessWithWarning')) ) {
-        if ( $response_array['L_ERRORCODE0'] == '10486' ) {
-          if ( CLICSHOPPING_APP_PAYPAL_EC_STATUS == '1' ) {
+      if (!in_array($response_array['ACK'], array('Success', 'SuccessWithWarning'))) {
+        if ($response_array['L_ERRORCODE0'] == '10486') {
+          if (CLICSHOPPING_APP_PAYPAL_EC_STATUS == '1') {
             $paypal_url = 'https://www.paypal.com/cgi-bin/webscr?cmd=_express-checkout';
           } else {
             $paypal_url = 'https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checkout';
@@ -425,26 +436,27 @@ EOD;
       }
     }
 
-    public function before_process_payflow() {
+    public function before_process_payflow()
+    {
       global $response_array;
 
       $CLICSHOPPING_Order = Registry::get('Order');
       $CLICSHOPPING_Address = Registry::get('Address');
 
-      if ( !isset($_SESSION['appPayPalEcResult']) ) {
+      if (!isset($_SESSION['appPayPalEcResult'])) {
         CLICSHOPPING::redirect(null, 'order&callback&paypal&ec');
       }
 
-      if ( $_SESSION['appPayPalEcResult']['RESULT'] == '0' ) {
-        if ( !isset($_SESSION['appPayPalEcSecret']) || ($_SESSION['appPayPalEcResult']['CUSTOM'] != $_SESSION['appPayPalEcSecret']) ) {
+      if ($_SESSION['appPayPalEcResult']['RESULT'] == '0') {
+        if (!isset($_SESSION['appPayPalEcSecret']) || ($_SESSION['appPayPalEcResult']['CUSTOM'] != $_SESSION['appPayPalEcSecret'])) {
           CLICSHOPPING::redirect(null, 'Cart');
         }
       } else {
         CLICSHOPPING::redirect(null, 'Cart&error_message=' . urlencode($_SESSION['appPayPalEcResult']['CLICSHOPPING_ERROR_MESSAGE']));
       }
 
-      if ( empty($_SESSION['comments']) ) {
-        if ( isset($_POST['ppecomments']) && !is_null($_POST['ppecomments']) ) {
+      if (empty($_SESSION['comments'])) {
+        if (isset($_POST['ppecomments']) && !is_null($_POST['ppecomments'])) {
           $_SESSION['comments'] = HTML::sanitize($_POST['ppecomments']);
 
           $CLICSHOPPING_Order->info['comments'] = $_SESSION['comments'];
@@ -452,12 +464,12 @@ EOD;
       }
 
       $params = array('EMAIL' => $CLICSHOPPING_Order->customer['email_address'],
-                      'TOKEN' => $_SESSION['appPayPalEcResult']['TOKEN'],
-                      'PAYERID' => $_SESSION['appPayPalEcResult']['PAYERID'],
-                      'AMT' => $this->app->formatCurrencyRaw($CLICSHOPPING_Order->info['total']),
-                      'CURRENCY' => $CLICSHOPPING_Order->info['currency']);
+        'TOKEN' => $_SESSION['appPayPalEcResult']['TOKEN'],
+        'PAYERID' => $_SESSION['appPayPalEcResult']['PAYERID'],
+        'AMT' => $this->app->formatCurrencyRaw($CLICSHOPPING_Order->info['total']),
+        'CURRENCY' => $CLICSHOPPING_Order->info['currency']);
 
-      if ( is_numeric($_SESSION['sendto']) && ($_SESSION['sendto'] > 0) ) {
+      if (is_numeric($_SESSION['sendto']) && ($_SESSION['sendto'] > 0)) {
         $params['SHIPTONAME'] = $CLICSHOPPING_Order->delivery['firstname'] . ' ' . $CLICSHOPPING_Order->delivery['lastname'];
         $params['SHIPTOSTREET'] = $CLICSHOPPING_Order->delivery['street_address'];
         $params['SHIPTOSTREET2'] = $CLICSHOPPING_Order->delivery['suburb'];
@@ -469,20 +481,22 @@ EOD;
 
       $response_array = $this->app->getApiResult('EC', 'PayflowDoExpressCheckoutPayment', $params);
 
-      if ( $response_array['RESULT'] != '0' ) {
+      if ($response_array['RESULT'] != '0') {
         CLICSHOPPING::redirect(null, 'Cart&error_message=' . urlencode($response_array['CLICSHOPPING_ERROR_MESSAGE']));
       }
     }
 
-    public function after_process() {
-      if ( CLICSHOPPING_APP_PAYPAL_GATEWAY == '1' ) {
+    public function after_process()
+    {
+      if (CLICSHOPPING_APP_PAYPAL_GATEWAY == '1') {
         $this->after_process_paypal();
       } else {
         $this->after_process_payflow();
       }
     }
 
-    public function after_process_paypal() {
+    public function after_process_paypal()
+    {
       global $response_array;
 
       $CLICSHOPPING_Order = Registry::get('Order');
@@ -492,20 +506,20 @@ EOD;
       $this->lastInsertOrderId = $CLICSHOPPING_Order->getLastOrderId();
 
       $pp_result = 'Transaction ID: ' . HTML::outputProtected($response_array['PAYMENTINFO_0_TRANSACTIONID']) . "\n" .
-                   'Payer Status: ' . HTML::outputProtected($_SESSION['appPayPalEcResult']['PAYERSTATUS']) . "\n" .
-                   'Address Status: ' . HTML::outputProtected($_SESSION['appPayPalEcResult']['ADDRESSSTATUS']) . "\n" .
-                   'Payment Status: ' . HTML::outputProtected($response_array['PAYMENTINFO_0_PAYMENTSTATUS']) . "\n" .
-                   'Payment Type: ' . HTML::outputProtected($response_array['PAYMENTINFO_0_PAYMENTTYPE']) . "\n" .
-                   'Pending Reason: ' . HTML::outputProtected($response_array['PAYMENTINFO_0_PENDINGREASON']);
+        'Payer Status: ' . HTML::outputProtected($_SESSION['appPayPalEcResult']['PAYERSTATUS']) . "\n" .
+        'Address Status: ' . HTML::outputProtected($_SESSION['appPayPalEcResult']['ADDRESSSTATUS']) . "\n" .
+        'Payment Status: ' . HTML::outputProtected($response_array['PAYMENTINFO_0_PAYMENTSTATUS']) . "\n" .
+        'Payment Type: ' . HTML::outputProtected($response_array['PAYMENTINFO_0_PAYMENTTYPE']) . "\n" .
+        'Pending Reason: ' . HTML::outputProtected($response_array['PAYMENTINFO_0_PENDINGREASON']);
 
       $sql_data_array = ['orders_id' => $this->lastInsertOrderId,
-                      'orders_status_id' => (int)CLICSHOPPING_APP_PAYPAL_TRANSACTIONS_ORDER_STATUS_ID,
-                      'orders_status_invoice_id' => (int)$CLICSHOPPING_Order->info['order_status_invoice'],
-                      'admin_user_name' => '',
-                      'date_added' => 'now()',
-                      'customer_notified' => '0',
-                      'comments' => $pp_result
-                      ];
+        'orders_status_id' => (int)CLICSHOPPING_APP_PAYPAL_TRANSACTIONS_ORDER_STATUS_ID,
+        'orders_status_invoice_id' => (int)$CLICSHOPPING_Order->info['order_status_invoice'],
+        'admin_user_name' => '',
+        'date_added' => 'now()',
+        'customer_notified' => '0',
+        'comments' => $pp_result
+      ];
 
       $this->app->db->save('orders_status_history', $sql_data_array);
 
@@ -522,11 +536,13 @@ EOD;
           }
         }
       }
+
       unset($_SESSION['appPayPalEcResult']);
       unset($_SESSION['appPayPalEcSecret']);
     }
 
-    public function after_process_payflow() {
+    public function after_process_payflow()
+    {
       global $response_array;
 
       $CLICSHOPPING_Order = Registry::get('Order');
@@ -534,22 +550,22 @@ EOD;
       $CLICSHOPPING_Template = Registry::get('Template');
 
       $pp_result = 'Transaction ID: ' . HTML::outputProtected($response_array['PNREF']) . "\n" .
-                   'Gateway: Payflow' . "\n" .
-                   'PayPal ID: ' . HTML::outputProtected($response_array['PPREF']) . "\n" .
-                   'Payer Status: ' . HTML::outputProtected($_SESSION['appPayPalEcResult']['PAYERSTATUS']) . "\n" .
-                   'Address Status: ' . HTML::outputProtected($_SESSION['appPayPalEcResult']['ADDRESSSTATUS']) . "\n" .
-                   'Payment Status: ' . HTML::outputProtected($response_array['PENDINGREASON']) . "\n" .
-                   'Payment Type: ' . HTML::outputProtected($response_array['PAYMENTTYPE']) . "\n" .
-                   'Response: ' . HTML::outputProtected($response_array['RESPMSG']) . "\n";
+        'Gateway: Payflow' . "\n" .
+        'PayPal ID: ' . HTML::outputProtected($response_array['PPREF']) . "\n" .
+        'Payer Status: ' . HTML::outputProtected($_SESSION['appPayPalEcResult']['PAYERSTATUS']) . "\n" .
+        'Address Status: ' . HTML::outputProtected($_SESSION['appPayPalEcResult']['ADDRESSSTATUS']) . "\n" .
+        'Payment Status: ' . HTML::outputProtected($response_array['PENDINGREASON']) . "\n" .
+        'Payment Type: ' . HTML::outputProtected($response_array['PAYMENTTYPE']) . "\n" .
+        'Response: ' . HTML::outputProtected($response_array['RESPMSG']) . "\n";
 
       $sql_data_array = ['orders_id' => $CLICSHOPPING_Order->Insert(),
-                      'orders_status_id' => (int)CLICSHOPPING_APP_PAYPAL_TRANSACTIONS_ORDER_STATUS_ID,
-                      'orders_status_invoice_id' => (int)$CLICSHOPPING_Order->info['order_status_invoice'],
-                      'admin_user_name' => '',
-                      'date_added' => 'now()',
-                      'customer_notified' => '0',
-                      'comments' => $pp_result
-                      ];
+        'orders_status_id' => (int)CLICSHOPPING_APP_PAYPAL_TRANSACTIONS_ORDER_STATUS_ID,
+        'orders_status_invoice_id' => (int)$CLICSHOPPING_Order->info['order_status_invoice'],
+        'admin_user_name' => '',
+        'date_added' => 'now()',
+        'customer_notified' => '0',
+        'comments' => $pp_result
+      ];
 
       $this->app->db->save('orders_status_history', $sql_data_array);
 
@@ -559,14 +575,14 @@ EOD;
 // Manually call PayflowInquiry to retrieve more details about the transaction and to allow admin post-transaction actions
       $response = $this->app->getApiResult('APP', 'PayflowInquiry', array('ORIGID' => $response_array['PNREF']));
 
-      if ( isset($response['RESULT']) && ($response['RESULT'] == '0') ) {
+      if (isset($response['RESULT']) && ($response['RESULT'] == '0')) {
         $result = 'Transaction ID: ' . HTML::outputProtected($response['ORIGPNREF']) . "\n" .
-                  'Gateway: Payflow' . "\n";
+          'Gateway: Payflow' . "\n";
 
         $pending_reason = $response['TRANSSTATE'];
         $payment_status = null;
 
-        switch ( $response['TRANSSTATE'] ) {
+        switch ($response['TRANSSTATE']) {
           case '3':
             $pending_reason = 'authorization';
             $payment_status = 'Pending';
@@ -589,13 +605,13 @@ EOD;
             break;
         }
 
-        if ( isset($payment_status) ) {
+        if (isset($payment_status)) {
           $result .= 'Payment Status: ' . HTML::outputProtected($payment_status) . "\n";
         }
 
         $result .= 'Pending Reason: ' . HTML::outputProtected($pending_reason) . "\n";
 
-        switch ( $response['AVSADDR'] ) {
+        switch ($response['AVSADDR']) {
           case 'Y':
             $result .= 'AVS Address: Match' . "\n";
             break;
@@ -605,7 +621,7 @@ EOD;
             break;
         }
 
-        switch ( $response['AVSZIP'] ) {
+        switch ($response['AVSZIP']) {
           case 'Y':
             $result .= 'AVS ZIP: Match' . "\n";
             break;
@@ -615,7 +631,7 @@ EOD;
             break;
         }
 
-        switch ( $response['IAVS'] ) {
+        switch ($response['IAVS']) {
           case 'Y':
             $result .= 'IAVS: International' . "\n";
             break;
@@ -625,7 +641,7 @@ EOD;
             break;
         }
 
-        switch ( $response['CVV2MATCH'] ) {
+        switch ($response['CVV2MATCH']) {
           case 'Y':
             $result .= 'CVV2: Match' . "\n";
             break;
@@ -636,13 +652,13 @@ EOD;
         }
 
         $sql_data_array = ['orders_id' => (int)$CLICSHOPPING_Order->Insert(),
-                        'orders_status_id' => (int)CLICSHOPPING_APP_PAYPAL_TRANSACTIONS_ORDER_STATUS_ID,
-                        'orders_status_invoice_id' => (int)$CLICSHOPPING_Order->info['order_status_invoice'],
-                        'admin_user_name' => '',
-                        'date_added' => 'now()',
-                        'customer_notified' => '0',
-                        'comments' => $result
-                        ];
+          'orders_status_id' => (int)CLICSHOPPING_APP_PAYPAL_TRANSACTIONS_ORDER_STATUS_ID,
+          'orders_status_invoice_id' => (int)$CLICSHOPPING_Order->info['order_status_invoice'],
+          'admin_user_name' => '',
+          'date_added' => 'now()',
+          'customer_notified' => '0',
+          'comments' => $result
+        ];
 
         $this->app->db->save('orders_status_history', $sql_data_array);
 
@@ -662,28 +678,34 @@ EOD;
       }
     }
 
-    public function get_error() {
+    public function get_error()
+    {
       return false;
     }
 
-    public function check() {
+    public function check()
+    {
       return defined('CLICSHOPPING_APP_PAYPAL_EC_STATUS') && (trim(CLICSHOPPING_APP_PAYPAL_EC_STATUS) != '');
     }
 
-    public function install() {
+    public function install()
+    {
       $this->app->redirect('Configure&Install&module=EC');
     }
 
-    public function remove() {
+    public function remove()
+    {
       $this->app->redirect('Configure&Uninstall&module=EC');
     }
 
-    public function keys() {
+    public function keys()
+    {
       return array('CLICSHOPPING_APP_PAYPAL_EC_SORT_ORDER');
     }
 
-    public function getProductType($id, $attributes) {
-      foreach ( $attributes as $a ) {
+    public function getProductType($id, $attributes)
+    {
+      foreach ($attributes as $a) {
         $Qcheck = $this->app->db->prepare('select pad.products_attributes_id
                                           from :table_products_attributes pa,
                                               :table_products_attributes_download pad
