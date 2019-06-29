@@ -419,7 +419,7 @@
 
           $email_address = HTML::sanitize($_SESSION['appPayPalEcResult']['EMAIL']);
 
-          if (!Is::email($email_address)) {
+          if (!Is::EmailAddress($email_address)) {
             $force_redirect = true;
           } else {
             $Qcheck = $this->pm->app->db->get('customers', '*', [
