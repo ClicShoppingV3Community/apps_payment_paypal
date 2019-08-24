@@ -148,7 +148,7 @@
 
         $counter = 0;
 
-        if (isset($_POST['CURRENCYCODE']) && $CLICSHOPPING_Currencies->is_set($_POST['CURRENCYCODE']) && ($_SESSION['currency'] != $_POST['CURRENCYCODE'])) {
+        if (isset($_POST['CURRENCYCODE']) && $CLICSHOPPING_Currencies->isSet($_POST['CURRENCYCODE']) && ($_SESSION['currency'] != $_POST['CURRENCYCODE'])) {
           $_SESSION['currency'] = $_POST['CURRENCYCODE'];
 
           $log_sane['CURRENCYCODE'] = $_POST['CURRENCYCODE'];
