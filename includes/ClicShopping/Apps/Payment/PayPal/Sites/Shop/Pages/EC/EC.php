@@ -749,8 +749,8 @@
 
 
           if (strpos($_SESSION['shipping'], '\\') !== false) {
-            list($vendor, $app, $module) = explode('\\', $_SESSION['shipping']);
-            list($module, $method) = explode('_', $module);
+            [$vendor, $app, $module] = explode('\\', $_SESSION['shipping']);
+            [$module, $method] = explode('_', $module);
 
             $module = $vendor . '\\' . $app . '\\' . $module;
 

@@ -30,7 +30,7 @@
 
 
       $array_menu = array(array('id' => '1', 'text' => $this->app->getDef('cfg_ec_status_live')),
-        array('id' => '0', 'text' => $this->app->getDef('cfg_ec_status_sandbox')),
+        array('id' => '2', 'text' => $this->app->getDef('cfg_ec_status_sandbox')),
         array('id' => '-1', 'text' => $this->app->getDef('cfg_ec_status_disabled'))
       );
 
