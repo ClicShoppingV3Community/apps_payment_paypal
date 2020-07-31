@@ -506,7 +506,7 @@
             $this->file = 'login_redirect.php';
 
             $this->data = [
-              'login_url' => CLICSHOPPING::link(null, 'Account&Login'),
+              'login_url' => CLICSHOPPING::link(null, 'Account&LogIn'),
               'email_address' => $email_address
             ];
 
