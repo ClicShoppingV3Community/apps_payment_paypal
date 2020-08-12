@@ -124,11 +124,11 @@ CLICSHOPPING.APP.PAYPAL.getBalance = function(type) {
     } catch (ex) {
     }
 
-    if ( (typeof data == 'object') && ('rpcStatus' in data) && (data['rpcStatus'] == 1) ) {
-      if ( ('balance' in data) && (typeof data['balance'] == 'object') ) {
+    if ( (typeof data == 'object') && ('rpcStatus' in data) && (data['rpcStatus'] == 1)) {
+      if ( ('balance' in data) && (typeof data['balance'] == 'object')) {
         balance = data['balance'];
       }
-    } else if ( (typeof data == 'string') && (data.indexOf('rpcStatus') > -1) ) {
+    } else if ( (typeof data == 'string') && (data.indexOf('rpcStatus') > -1)) {
       var result = data.split("\\n", 1);
 
       if ( result.length == 1 ) {
@@ -140,7 +140,7 @@ CLICSHOPPING.APP.PAYPAL.getBalance = function(type) {
           for ( var i = 0; i < entries.length; i++ ) {
             var entry = entries[i].split('=', 2);
 
-            if ( (entry.length == 2) && (entry[0] != 'rpcStatus') ) {
+            if ( (entry.length == 2) && (entry[0] != 'rpcStatus')) {
               balance[entry[0]] = entry[1];
             }
           }
