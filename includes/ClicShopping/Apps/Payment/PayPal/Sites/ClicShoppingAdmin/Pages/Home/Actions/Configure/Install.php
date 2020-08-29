@@ -28,7 +28,7 @@
       $m = Registry::get('PayPalAdminConfig' . $current_module);
       $m->install();
 
-      $this->installDb();
+      static::installDb();
       static::installDbMenuAdministration();
 
       $CLICSHOPPING_MessageStack->add($this->app->getDef('alert_module_install_success'), 'success', 'PayPal');
