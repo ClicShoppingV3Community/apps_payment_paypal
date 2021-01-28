@@ -94,7 +94,7 @@
   </table>
 
   <div>
-    <span class="float-md-right"><?php echo $Qlog->getPageSetLinks(CLICSHOPPING::getAllGET(array('page'))); ?></span>
+    <span class="float-end"><?php echo $Qlog->getPageSetLinks(CLICSHOPPING::getAllGET(array('page'))); ?></span>
     <?php echo $Qlog->getPageSetLabel($CLICSHOPPING_PayPal->getDef('listing_number_of_log_entries')); ?>
   </div>
 

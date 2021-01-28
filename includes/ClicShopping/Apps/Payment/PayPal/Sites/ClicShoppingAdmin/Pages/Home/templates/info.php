@@ -15,7 +15,7 @@
 ?>
 
 
-  <div class="col-sm-6 float-md-right">
+  <div class="col-sm-6 float-end">
     <div class="card">
       <div class="card-header">
         <?php echo $CLICSHOPPING_PayPal->getDef('online_forum_title'); ?>
@@ -33,7 +33,7 @@
     <div class="separator"></div>
   </div>
 
-  <div class="col-sm-6 float-md-right">
+  <div class="col-sm-6 float-end">
     <div class="card">
       <div class="card-header">
         <?php echo $CLICSHOPPING_PayPal->getDef('title_intro_document'); ?>

@@ -14,7 +14,7 @@
 
 ?>
 <div class="separator"></div>
-<div class="col-md-6 float-md-left">
+<div class="col-md-6 float-start">
   <div class="card">
     <div class="card-header">
       <?php echo $CLICSHOPPING_PayPal->getDef('payflow_live_title') . ' ' . $CLICSHOPPING_PayPal->getDef('payflow'); ?>
@@ -72,7 +72,7 @@
   </div>
 </div>
 
-<div class="col-md-6 float-md-right">
+<div class="col-md-6 float-end">
   <div class="card">
     <div class="card-header">
       <?php echo $CLICSHOPPING_PayPal->getDef('payflow_sandbox_title'); ?>
