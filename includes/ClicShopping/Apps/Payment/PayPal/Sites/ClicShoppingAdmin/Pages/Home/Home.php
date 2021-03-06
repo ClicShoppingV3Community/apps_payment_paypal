@@ -37,7 +37,7 @@
         $admin_dashboard_modules = explode(';', MODULE_ADMIN_DASHBOARD_INSTALLED);
 
         foreach (Apps::getModules('adminDashboard', 'PayPal') as $k => $v) {
-          if (!in_array($k, $admin_dashboard_modules)) {
+          if (!\in_array($k, $admin_dashboard_modules)) {
             $admin_dashboard_modules[] = $k;
 
             $adm = new $v();
@@ -68,7 +68,7 @@
         ];
 
         foreach ($paypal_menu_check as $value) {
-          if (defined($value) && !empty(constant($value))) {
+          if (\defined($value) && !empty(constant($value))) {
             $this->runAction('Configure');
             break;
           }

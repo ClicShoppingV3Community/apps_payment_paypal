@@ -36,7 +36,7 @@
       if (!empty($result)) {
         $result = json_decode($result, true);
 
-        if (isset($result['rpcStatus']) && ($result['rpcStatus'] === 1) && isset($result['account_type']) && in_array($result['account_type'], ['live', 'sandbox']) && isset($result['account_id']) && isset($result['api_username']) && isset($result['api_password']) && isset($result['api_signature'])) {
+        if (isset($result['rpcStatus']) && ($result['rpcStatus'] === 1) && isset($result['account_type']) && \in_array($result['account_type'], ['live', 'sandbox']) && isset($result['account_id']) && isset($result['api_username']) && isset($result['api_password']) && isset($result['api_signature'])) {
           if ($result['account_type'] == 'live') {
             $param_prefix = 'CLICSHOPPING_APP_PAYPAL_LIVE_';
           } else {

@@ -27,7 +27,7 @@
   class PS implements \ClicShopping\OM\Modules\PaymentInterface
   {
 
-    public $code;
+    public string $code;
     public $title;
     public $description;
     public $enabled;
@@ -62,7 +62,7 @@
 
 // Activation module du paiement selon les groupes B2B
 
-      if (defined('CLICSHOPPING_APP_PAYPAL_PS_STATUS')) {
+      if (\defined('CLICSHOPPING_APP_PAYPAL_PS_STATUS')) {
         if ($CLICSHOPPING_Customer->getCustomersGroupID() != 0) {
           if (B2BCommon::getPaymentUnallowed($this->code)) {
 
@@ -73,7 +73,7 @@
             }
           }
         } else {
-          if (defined('CLICSHOPPING_APP_PAYPAL_PS_NO_AUTHORIZE') && CLICSHOPPING_APP_PAYPAL_PS_NO_AUTHORIZE == 'True' && $CLICSHOPPING_Customer->getCustomersGroupID() == 0) {
+          if (\defined('CLICSHOPPING_APP_PAYPAL_PS_NO_AUTHORIZE') && CLICSHOPPING_APP_PAYPAL_PS_NO_AUTHORIZE == 'True' && $CLICSHOPPING_Customer->getCustomersGroupID() == 0) {
             if ($CLICSHOPPING_Customer->getCustomersGroupID() == 0) {
 
               if (CLICSHOPPING_APP_PAYPAL_PS_STATUS == '2' || CLICSHOPPING_APP_PAYPAL_PS_STATUS == '1') {
@@ -86,11 +86,11 @@
         }
       }
 
-      $this->sort_order = defined('CLICSHOPPING_APP_PAYPAL_PS_SORT_ORDER') ? CLICSHOPPING_APP_PAYPAL_PS_SORT_ORDER : 0;
+      $this->sort_order = \defined('CLICSHOPPING_APP_PAYPAL_PS_SORT_ORDER') ? CLICSHOPPING_APP_PAYPAL_PS_SORT_ORDER : 0;
 
-      $this->order_status = defined('CLICSHOPPING_APP_PAYPAL_PS_PREPARE_ORDER_STATUS_ID') && ((int)CLICSHOPPING_APP_PAYPAL_PS_PREPARE_ORDER_STATUS_ID > 0) ? (int)CLICSHOPPING_APP_PAYPAL_PS_PREPARE_ORDER_STATUS_ID : 0;
+      $this->order_status = \defined('CLICSHOPPING_APP_PAYPAL_PS_PREPARE_ORDER_STATUS_ID') && ((int)CLICSHOPPING_APP_PAYPAL_PS_PREPARE_ORDER_STATUS_ID > 0) ? (int)CLICSHOPPING_APP_PAYPAL_PS_PREPARE_ORDER_STATUS_ID : 0;
 
-      if (defined('CLICSHOPPING_APP_PAYPAL_PS_STATUS')) {
+      if (\defined('CLICSHOPPING_APP_PAYPAL_PS_STATUS')) {
         if (CLICSHOPPING_APP_PAYPAL_PS_STATUS == '2') {
           $this->title .= ' [Sandbox]';
           $this->public_title .= ' (' . $this->app->vendor . '\\' . $this->app->code . '\\' . $this->code . '; Sandbox)';
@@ -245,11 +245,11 @@
         if ($insert_order === true) {
           $order_totals = [];
 
-          if (is_array($CLICSHOPPING_OrderTotal->modules)) {
+          if (\is_array($CLICSHOPPING_OrderTotal->modules)) {
             $order_total = $CLICSHOPPING_OrderTotal->process();
 
             foreach ($order_total as $value) {
-              if (!is_null($value['title']) && !is_null($value['title'])) {
+              if (!\is_null($value['title']) && !\is_null($value['title'])) {
                 $order_totals[] = ['code' => $value['code'],
                   'title' => $value['title'],
                   'text' => $value['text'],
@@ -348,7 +348,7 @@
           $this->app->db->save('orders_pages_manager', $sql_data_array);
 
 // orders total
-          for ($i = 0, $n = count($order_totals); $i < $n; $i++) {
+          for ($i = 0, $n = \count($order_totals); $i < $n; $i++) {
             $sql_data_array = ['orders_id' => (int)$insert_id,
               'title' => $order_totals[$i]['title'],
               'text' => $order_totals[$i]['text'],
@@ -360,7 +360,7 @@
             $this->app->db->save('orders_total', $sql_data_array);
           }
 
-          for ($i = 0, $n = count($CLICSHOPPING_Order->products); $i < $n; $i++) {
+          for ($i = 0, $n = \count($CLICSHOPPING_Order->products); $i < $n; $i++) {
 // search the good model
             if ($CLICSHOPPING_Customer->getCustomersGroupID() != 0) {
               $QproductsModuleCustomersGroup = $this->app->db->prepare('select products_model_group
@@ -395,7 +395,7 @@
             $order_products_id = $this->app->db->lastInsertId();
 
             if (isset($CLICSHOPPING_Order->products[$i]['attributes'])) {
-              for ($j = 0, $n2 = count($CLICSHOPPING_Order->products[$i]['attributes']); $j < $n2; $j++) {
+              for ($j = 0, $n2 = \count($CLICSHOPPING_Order->products[$i]['attributes']); $j < $n2; $j++) {
 
                 $Qattributes = $CLICSHOPPING_ProductsAttributes->getAttributesDownloaded($CLICSHOPPING_Order->products[$i]['id'], $CLICSHOPPING_Order->products[$i]['attributes'][$j]['option_id'], $CLICSHOPPING_Order->products[$i]['attributes'][$j]['value_id'], $this->app->lang->getId());
 
@@ -480,7 +480,7 @@
 
 //pb format_raw
       /*
-            if(is_array($CLICSHOPPING_Order->coupon->applied_discount) && ($discount_amount = array_sum($CLICSHOPPING_Order->coupon->applied_discount)) > 0) {
+            if(\is_array($CLICSHOPPING_Order->coupon->applied_discount) && ($discount_amount = array_sum($CLICSHOPPING_Order->coupon->applied_discount)) > 0) {
               $parameters['discount_amount_cart'] = $this->format_raw($discount_amount);
             }
       */
@@ -506,7 +506,7 @@
         $parameters['country'] = $CLICSHOPPING_Order->billing['country']['iso_code_2'];
       }
 
-      if (!is_null(CLICSHOPPING_APP_PAYPAL_PS_PAGE_STYLE)) {
+      if (!\is_null(CLICSHOPPING_APP_PAYPAL_PS_PAGE_STYLE)) {
         $parameters['page_style'] = CLICSHOPPING_APP_PAYPAL_PS_PAGE_STYLE;
       }
 
@@ -533,12 +533,12 @@
       $has_negative_price = false;
 
 // order totals are processed on checkout confirmation but not captured into a variable
-      if (is_array($CLICSHOPPING_OrderTotal->modules)) {
+      if (\is_array($CLICSHOPPING_OrderTotal->modules)) {
         $order_totals = $CLICSHOPPING_OrderTotal->process();
 
         foreach ($order_totals as $value) {
-          if (!is_null($value['title']) && !is_null($value['title'])) {
-            if (!in_array($value['code'], array('ot_subtotal', 'ot_shipping', 'ot_tax', 'ot_total', 'ST', 'SH', 'TX'))) {
+          if (!\is_null($value['title']) && !\is_null($value['title'])) {
+            if (!\in_array($value['code'], array('ot_subtotal', 'ot_shipping', 'ot_tax', 'ot_total', 'ST', 'SH', 'TX'))) {
               $item_params['item_name_' . $line_item_no] = $value['title'];
               $item_params['amount_' . $line_item_no] = $this->app->formatCurrencyRaw($value['value']);
 
@@ -651,11 +651,11 @@
 
       $seller_accounts = array($this->app->getCredentials('PS', 'email'));
 
-      if (!is_null($this->app->getCredentials('PS', 'email_primary'))) {
+      if (!\is_null($this->app->getCredentials('PS', 'email_primary'))) {
         $seller_accounts[] = $this->app->getCredentials('PS', 'email_primary');
       }
 
-      if ((isset($_POST['receiver_email']) && in_array($_POST['receiver_email'], $seller_accounts)) || (isset($_POST['business']) && in_array($_POST['business'], $seller_accounts)) || (isset($_POST['receiver_id']) && in_array($_POST['receiver_id'], $seller_accounts))) {
+      if ((isset($_POST['receiver_email']) && \in_array($_POST['receiver_email'], $seller_accounts)) || (isset($_POST['business']) && \in_array($_POST['business'], $seller_accounts)) || (isset($_POST['receiver_id']) && \in_array($_POST['receiver_id'], $seller_accounts))) {
         $parameters = 'cmd=_notify-validate&';
 
         foreach ($_POST as $key => $value) {
@@ -678,7 +678,7 @@
         $this->app->log('PS', $pptx_params['cmd'], ($result == 'VERIFIED') ? 1 : -1, $pptx_params, $result, (CLICSHOPPING_APP_PAYPAL_PS_STATUS == '1') ? 'live' : 'sandbox');
 
       } elseif (isset($_GET['tx'])) { // PDT
-        if (!is_null(CLICSHOPPING_APP_PAYPAL_PS_PDT_IDENTITY_TOKEN)) {
+        if (!\is_null(CLICSHOPPING_APP_PAYPAL_PS_PDT_IDENTITY_TOKEN)) {
           $pptx_params['cmd'] = '_notify-synch';
 
           $parameters = 'cmd=_notify-synch&tx=' . urlencode($_GET['tx']) . '&at=' . urlencode(CLICSHOPPING_APP_PAYPAL_PS_PDT_IDENTITY_TOKEN);
@@ -698,7 +698,7 @@
               }
             }
 
-            if (is_array($pdt) && !empty($pdt)) {
+            if (\is_array($pdt) && !empty($pdt)) {
               foreach ($pdt as $line) {
                 $p = explode('=', $line, 2);
 
@@ -717,7 +717,7 @@
         } else {
           $details = $this->app->getApiResult('PS', 'GetTransactionDetails', array('TRANSACTIONID' => $_GET['tx']), (CLICSHOPPING_APP_PAYPAL_DP_STATUS == '1') ? 'live' : 'sandbox');
 
-          if (in_array($details['ACK'], array('Success', 'SuccessWithWarning'))) {
+          if (\in_array($details['ACK'], array('Success', 'SuccessWithWarning'))) {
             $result = 'VERIFIED';
 
             $pptx_params = ['txn_id' => $details['TRANSACTIONID'],
@@ -836,7 +836,7 @@
 // initialized for the email confirmation
       $products_ordered = '';
 
-      for ($i = 0, $n = count($CLICSHOPPING_Order->products); $i < $n; $i++) {
+      for ($i = 0, $n = \count($CLICSHOPPING_Order->products); $i < $n; $i++) {
         if (STOCK_LIMITED == 'true') {
           if (DOWNLOAD_ENABLED == 'true') {
             $stock_query_sql = 'select p.products_quantity,
@@ -850,7 +850,7 @@
 // otherwise, we have to build the query dynamically with a loop
             $products_attributes = (isset($CLICSHOPPING_Order->products[$i]['attributes'])) ? $CLICSHOPPING_Order->products[$i]['attributes'] : '';
 
-            if (is_array($products_attributes)) {
+            if (\is_array($products_attributes)) {
               $stock_query_sql .= ' and pa.options_id = :options_id
                                    and pa.options_values_id = :options_values_id
                                 ';
@@ -859,7 +859,7 @@
             $Qstock = $this->app->db->prepare($stock_query_sql);
             $Qstock->bindInt(':products_id', $CLICSHOPPING_Prod::getProductID($CLICSHOPPING_Order->products[$i]['id']));
 
-            if (is_array($products_attributes)) {
+            if (\is_array($products_attributes)) {
               $Qstock->bindInt(':options_id', $products_attributes[0]['option_id']);
               $Qstock->bindInt(':options_values_id', $products_attributes[0]['value_id']);
             }
@@ -878,7 +878,7 @@
 
           if ($Qstock->fetch() !== false) {
 // do not decrement quantities if products_attributes_filename exists
-            if ((DOWNLOAD_ENABLED != 'true') || !is_null($Qstock->value('products_attributes_filename'))) {
+            if ((DOWNLOAD_ENABLED != 'true') || !\is_null($Qstock->value('products_attributes_filename'))) {
 // select the good qty in B2B ti decrease the stock. See shopping_cart top display out stock or not
               if ($CLICSHOPPING_Customer->getCustomersGroupID() != '0') {
 
@@ -951,16 +951,16 @@
               );
             }
 
-// Alert by mail product exhausted if a product is 0 or < 0
-            if (STOCK_ALERT_PRODUCT_EXHAUSTED == 'true') {
+// Alert by mail product sold_out if a product is 0 or < 0
+            if (STOCK_ALERT_PRODUCT_SOLD_OUT == 'true') {
               if (($stock_left < 1) && (STOCK_ALLOW_CHECKOUT == 'false') && (STOCK_CHECK == 'true')) {
                 $email_text_subject_stock = stripslashes(CLICSHOPPING::getDef('email_text_subject_stock', ['store_name' => STORE_NAME]));
                 $email_text_subject_stock = html_entity_decode($email_text_subject_stock);
-                $email_product_exhausted_stock = stripslashes(CLICSHOPPING::getDef('email_text_stock_exuasted'));
-                $email_product_exhausted_stock = html_entity_decode($email_product_exhausted_stock);
-                $email_product_exhausted_stock .= "\n" . CLICSHOPPING::getDef('module_payment_paypal_standard_text_date_alert') . ' ' . strftime(CLICSHOPPING::getDef('date_format_long')) . "\n" . CLICSHOPPING::getDef('email_text_model') . ' ' . $CLICSHOPPING_Order->products[$i]['model'] . "\n" . CLICSHOPPING::getDef('email_text_products_name') . $CLICSHOPPING_Order->products[$i]['name'] . "\n" . CLICSHOPPING::getDef('email_text_products_id') . ' ' . $CLICSHOPPING_Prod::getProductID($CLICSHOPPING_Order->products[$i]['id']) . "\n";
+                $email_product_sold_out_stock = stripslashes(CLICSHOPPING::getDef('email_text_stock_exuasted'));
+                $email_product_sold_out_stock = html_entity_decode($email_product_sold_out_stock);
+                $email_product_sold_out_stock .= "\n" . CLICSHOPPING::getDef('module_payment_paypal_standard_text_date_alert') . ' ' . strftime(CLICSHOPPING::getDef('date_format_long')) . "\n" . CLICSHOPPING::getDef('email_text_model') . ' ' . $CLICSHOPPING_Order->products[$i]['model'] . "\n" . CLICSHOPPING::getDef('email_text_products_name') . $CLICSHOPPING_Order->products[$i]['name'] . "\n" . CLICSHOPPING::getDef('email_text_products_id') . ' ' . $CLICSHOPPING_Prod::getProductID($CLICSHOPPING_Order->products[$i]['id']) . "\n";
 
-                $CLICSHOPPING_Mail->clicMail(STORE_OWNER, STORE_OWNER_EMAIL_ADDRESS, $email_text_subject_stock, $email_product_exhausted_stock, STORE_OWNER, STORE_OWNER_EMAIL_ADDRESS);
+                $CLICSHOPPING_Mail->clicMail(STORE_OWNER, STORE_OWNER_EMAIL_ADDRESS, $email_text_subject_stock, $email_product_sold_out_stock, STORE_OWNER, STORE_OWNER_EMAIL_ADDRESS);
               }
             } // end stock alert
           }
@@ -979,7 +979,7 @@
         $products_ordered_attributes = '';
 
         if (isset($CLICSHOPPING_Order->products[$i]['attributes'])) {
-          for ($j = 0, $n2 = count($CLICSHOPPING_Order->products[$i]['attributes']); $j < $n2; $j++) {
+          for ($j = 0, $n2 = \count($CLICSHOPPING_Order->products[$i]['attributes']); $j < $n2; $j++) {
 
             $Qattributes = $CLICSHOPPING_ProductsAttributes->getAttributesDownloaded($CLICSHOPPING_Order->products[$i]['id'], $CLICSHOPPING_Order->products[$i]['attributes'][$j]['option_id'], $CLICSHOPPING_Order->products[$i]['attributes'][$j]['value_id'], $this->app->lang->getId());
 
@@ -1014,7 +1014,7 @@
 
       $email_total = '';
 
-      for ($i = 0, $n = count($CLICSHOPPING_Order->totals); $i < $n; $i++) {
+      for ($i = 0, $n = \count($CLICSHOPPING_Order->totals); $i < $n; $i++) {
         $email_total .= strip_tags($CLICSHOPPING_Order->totals[$i]['title']) . ' ' . strip_tags($CLICSHOPPING_Order->totals[$i]['text']) . "\n";
       }
 
@@ -1081,7 +1081,7 @@
       if (is_dir($source_folder)) {
         $files_get = $CLICSHOPPING_Template->getSpecificFiles($source_folder, 'CheckoutProcess*');
 
-        if (is_array($files_get)) {
+        if (\is_array($files_get)) {
           foreach ($files_get as $value) {
             if (!empty($value['name'])) {
               $CLICSHOPPING_Hooks->call('CheckoutProcess', $value['name']);
@@ -1104,7 +1104,7 @@
       if (is_dir($source_folder)) {
         $files_get = $CLICSHOPPING_Template->getSpecificFiles($source_folder, 'CheckoutProcess*');
 
-        if (is_array($files_get)) {
+        if (\is_array($files_get)) {
           foreach ($files_get as $value) {
             if (!empty($value['name'])) {
               $CLICSHOPPING_Hooks->call('CheckoutProcess', $value['name']);
@@ -1137,7 +1137,7 @@
 
     public function check()
     {
-      return defined('CLICSHOPPING_APP_PAYPAL_PS_STATUS') && (trim(CLICSHOPPING_APP_PAYPAL_PS_STATUS) != '');
+      return \defined('CLICSHOPPING_APP_PAYPAL_PS_STATUS') && (trim(CLICSHOPPING_APP_PAYPAL_PS_STATUS) != '');
     }
 
     public function install()

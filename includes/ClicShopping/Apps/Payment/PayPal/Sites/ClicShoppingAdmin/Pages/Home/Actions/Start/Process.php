@@ -22,7 +22,7 @@
       $CLICSHOPPING_MessageStack = Registry::get('MessageStack');
       $CLICSHOPPING_PayPal = Registry::get('PayPal');
 
-      if (isset($_GET['type']) && in_array($_GET['type'], [
+      if (isset($_GET['type']) && \in_array($_GET['type'], [
           'live',
           'sandbox'
         ])) {
@@ -56,7 +56,7 @@
 
         $result = json_decode($result, true);
 
-        if (!empty($result) && is_array($result) && isset($result['rpcStatus'])) {
+        if (!empty($result) && \is_array($result) && isset($result['rpcStatus'])) {
           if (($result['rpcStatus'] === 1) && isset($result['merchant_id']) && (preg_match('/^[A-Za-z0-9]{32}$/', $result['merchant_id']) === 1) && isset($result['redirect_url']) && isset($result['secret'])) {
             $CLICSHOPPING_PayPal->saveCfgParam('CLICSHOPPING_APP_PAYPAL_START_MERCHANT_ID', $result['merchant_id']);
             $CLICSHOPPING_PayPal->saveCfgParam('CLICSHOPPING_APP_PAYPAL_START_SECRET', $result['secret']);

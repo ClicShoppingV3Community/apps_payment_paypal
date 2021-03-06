@@ -51,7 +51,7 @@
 
     public function hasAttribute($attribute)
     {
-      return in_array($attribute, explode(';', CLICSHOPPING_APP_PAYPAL_LOGIN_ATTRIBUTES));
+      return \in_array($attribute, explode(';', CLICSHOPPING_APP_PAYPAL_LOGIN_ATTRIBUTES));
     }
 
 

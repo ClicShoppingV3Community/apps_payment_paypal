@@ -36,9 +36,9 @@
         }
       }
 
-      $this->page->data['current_module'] = (isset($_GET['module']) && in_array($_GET['module'], $modules)) ? $_GET['module'] : $default_module;
+      $this->page->data['current_module'] = (isset($_GET['module']) && \in_array($_GET['module'], $modules)) ? $_GET['module'] : $default_module;
 
-      if (!defined('CLICSHOPPING_APP_PAYPAL_TRANSACTIONS_ORDER_STATUS_ID')) {
+      if (!\defined('CLICSHOPPING_APP_PAYPAL_TRANSACTIONS_ORDER_STATUS_ID')) {
         $Qcheck = $CLICSHOPPING_PayPal->db->get('orders_status', 'orders_status_id', [
           'orders_status_name' => 'PayPal [Transactions]'
         ],
@@ -73,11 +73,11 @@
         $CLICSHOPPING_PayPal->saveCfgParam('CLICSHOPPING_APP_PAYPAL_TRANSACTIONS_ORDER_STATUS_ID', $status_id);
       }
 
-      if (!defined('CLICSHOPPING_APP_PAYPAL_GATEWAY')) {
+      if (!\defined('CLICSHOPPING_APP_PAYPAL_GATEWAY')) {
         $CLICSHOPPING_PayPal->saveCfgParam('CLICSHOPPING_APP_PAYPAL_GATEWAY', '1');
       }
 
-      if (!defined('CLICSHOPPING_APP_PAYPAL_LOG_TRANSACTIONS')) {
+      if (!\defined('CLICSHOPPING_APP_PAYPAL_LOG_TRANSACTIONS')) {
         $CLICSHOPPING_PayPal->saveCfgParam('CLICSHOPPING_APP_PAYPAL_LOG_TRANSACTIONS', '1');
       }
     }

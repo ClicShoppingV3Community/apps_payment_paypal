@@ -23,7 +23,7 @@
   class EC implements \ClicShopping\OM\Modules\PaymentInterface
   {
 
-    public $code;
+    public string $code;
     public $title;
     public $description;
     public $enabled;
@@ -54,7 +54,7 @@
 
 // Activation module du paiement selon les groupes B2B
 
-      if (defined('CLICSHOPPING_APP_PAYPAL_EC_STATUS')) {
+      if (\defined('CLICSHOPPING_APP_PAYPAL_EC_STATUS')) {
         if ($CLICSHOPPING_Customer->getCustomersGroupID() != 0) {
           if (B2BCommon::getPaymentUnallowed($this->code)) {
             if (CLICSHOPPING_APP_PAYPAL_EC_STATUS == '2' || CLICSHOPPING_APP_PAYPAL_EC_STATUS == '1') {
@@ -64,7 +64,7 @@
             }
           }
         } else {
-          if (defined('CLICSHOPPING_APP_PAYPAL_EC_NO_AUTHORIZE') && CLICSHOPPING_APP_PAYPAL_EC_NO_AUTHORIZE == 'True' && $CLICSHOPPING_Customer->getCustomersGroupID() == 0) {
+          if (\defined('CLICSHOPPING_APP_PAYPAL_EC_NO_AUTHORIZE') && CLICSHOPPING_APP_PAYPAL_EC_NO_AUTHORIZE == 'True' && $CLICSHOPPING_Customer->getCustomersGroupID() == 0) {
             if ($CLICSHOPPING_Customer->getCustomersGroupID() == 0) {
 
               if (CLICSHOPPING_APP_PAYPAL_EC_STATUS == '2' || CLICSHOPPING_APP_PAYPAL_EC_STATUS == '1') {
@@ -77,11 +77,11 @@
         }
       }
 
-      $this->sort_order = defined('CLICSHOPPING_APP_PAYPAL_EC_SORT_ORDER') ? CLICSHOPPING_APP_PAYPAL_EC_SORT_ORDER : 0;
+      $this->sort_order = \defined('CLICSHOPPING_APP_PAYPAL_EC_SORT_ORDER') ? CLICSHOPPING_APP_PAYPAL_EC_SORT_ORDER : 0;
 
-      $this->order_status = defined('CLICSHOPPING_APP_PAYPAL_EC_ORDER_STATUS_ID') && ((int)CLICSHOPPING_APP_PAYPAL_EC_ORDER_STATUS_ID > 0) ? (int)CLICSHOPPING_APP_PAYPAL_EC_ORDER_STATUS_ID : 0;
+      $this->order_status = \defined('CLICSHOPPING_APP_PAYPAL_EC_ORDER_STATUS_ID') && ((int)CLICSHOPPING_APP_PAYPAL_EC_ORDER_STATUS_ID > 0) ? (int)CLICSHOPPING_APP_PAYPAL_EC_ORDER_STATUS_ID : 0;
 
-      if (defined('CLICSHOPPING_APP_PAYPAL_EC_STATUS')) {
+      if (\defined('CLICSHOPPING_APP_PAYPAL_EC_STATUS')) {
         if (CLICSHOPPING_APP_PAYPAL_EC_STATUS == '2') {
           $this->title .= ' [Sandbox]';
           $this->public_title .= ' (' . $this->app->vendor . '\\' . $this->app->code . '\\' . $this->code . '; Sandbox)';
@@ -329,7 +329,7 @@ EOD;
       }
 
       if (CLICSHOPPING_APP_PAYPAL_GATEWAY == '1') { // PayPal
-        if (!in_array($_SESSION['appPayPalEcResult']['ACK'], array('Success', 'SuccessWithWarning'))) {
+        if (!\in_array($_SESSION['appPayPalEcResult']['ACK'], array('Success', 'SuccessWithWarning'))) {
           CLICSHOPPING::redirect(null, 'Cart&error_message=' . stripslashes($_SESSION['appPayPalEcResult']['L_LONGMESSAGE0']));
         } elseif (!isset($_SESSION['appPayPalEcSecret']) || ($_SESSION['appPayPalEcResult']['PAYMENTREQUEST_0_CUSTOM'] != $_SESSION['appPayPalEcSecret'])) {
           CLICSHOPPING::redirect(null, 'Cart');
@@ -386,7 +386,7 @@ EOD;
         CLICSHOPPING::redirect(null, 'order&callback&paypal&ec');
       }
 
-      if (in_array($_SESSION['appPayPalEcResult']['ACK'], array('Success', 'SuccessWithWarning'))) {
+      if (\in_array($_SESSION['appPayPalEcResult']['ACK'], array('Success', 'SuccessWithWarning'))) {
         if (!isset($_SESSION['appPayPalEcSecret']) || ($_SESSION['appPayPalEcResult']['PAYMENTREQUEST_0_CUSTOM'] != $_SESSION['appPayPalEcSecret'])) {
           CLICSHOPPING::redirect(null, 'Cart');
         }
@@ -395,7 +395,7 @@ EOD;
       }
 
       if (empty($_SESSION['comments'])) {
-        if (isset($_POST['ppecomments']) && !is_null($_POST['ppecomments'])) {
+        if (isset($_POST['ppecomments']) && !\is_null($_POST['ppecomments'])) {
           $_SESSION['comments'] = HTML::sanitize($_POST['ppecomments']);
 
           $CLICSHOPPING_Order->info['comments'] = $_SESSION['comments'];
@@ -419,7 +419,7 @@ EOD;
 
       $response_array = $this->app->getApiResult('EC', 'DoExpressCheckoutPayment', $params);
 
-      if (!in_array($response_array['ACK'], array('Success', 'SuccessWithWarning'))) {
+      if (!\in_array($response_array['ACK'], array('Success', 'SuccessWithWarning'))) {
         if ($response_array['L_ERRORCODE0'] == '10486') {
           if (CLICSHOPPING_APP_PAYPAL_EC_STATUS == '1') {
             $paypal_url = 'https://www.paypal.com/cgi-bin/webscr?cmd=_express-checkout';
@@ -456,7 +456,7 @@ EOD;
       }
 
       if (empty($_SESSION['comments'])) {
-        if (isset($_POST['ppecomments']) && !is_null($_POST['ppecomments'])) {
+        if (isset($_POST['ppecomments']) && !\is_null($_POST['ppecomments'])) {
           $_SESSION['comments'] = HTML::sanitize($_POST['ppecomments']);
 
           $CLICSHOPPING_Order->info['comments'] = $_SESSION['comments'];
@@ -528,7 +528,7 @@ EOD;
       if (is_dir($source_folder)) {
         $files_get = $CLICSHOPPING_Template->getSpecificFiles($source_folder, 'CheckoutProcess*');
 
-        if (is_array($files_get)) {
+        if (\is_array($files_get)) {
           foreach ($files_get as $value) {
             if (!empty($value['name'])) {
               $CLICSHOPPING_Hooks->call('CheckoutProcess', $value['name']);
@@ -667,7 +667,7 @@ EOD;
         if (is_dir($source_folder)) {
           $files_get = $CLICSHOPPING_Template->getSpecificFiles($source_folder, 'CheckoutProcess*');
 
-          if (is_array($files_get)) {
+          if (\is_array($files_get)) {
             foreach ($files_get as $value) {
               if (!empty($value['name'])) {
                 $CLICSHOPPING_Hooks->call('CheckoutProcess', $value['name']);
@@ -685,7 +685,7 @@ EOD;
 
     public function check()
     {
-      return defined('CLICSHOPPING_APP_PAYPAL_EC_STATUS') && (trim(CLICSHOPPING_APP_PAYPAL_EC_STATUS) != '');
+      return \defined('CLICSHOPPING_APP_PAYPAL_EC_STATUS') && (trim(CLICSHOPPING_APP_PAYPAL_EC_STATUS) != '');
     }
 
     public function install()

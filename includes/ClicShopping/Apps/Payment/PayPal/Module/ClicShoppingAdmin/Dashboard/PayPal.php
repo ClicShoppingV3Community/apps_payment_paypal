@@ -34,7 +34,7 @@
       $this->title = $this->app->getDef('module_admin_dashboard_title');
       $this->description = $this->app->getDef('module_admin_dashboard_description');
 
-      if (defined('MODULE_ADMIN_DASHBOARD_PAYPAL_APP_SORT_ORDER')) {
+      if (\defined('MODULE_ADMIN_DASHBOARD_PAYPAL_APP_SORT_ORDER')) {
         $this->sort_order = MODULE_ADMIN_DASHBOARD_PAYPAL_APP_SORT_ORDER;
         $this->enabled = true;
       }

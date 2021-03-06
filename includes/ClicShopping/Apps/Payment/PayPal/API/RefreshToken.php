@@ -31,7 +31,7 @@
 
       return [
         'res' => $response,
-        'success' => (is_array($response) && !isset($response['error'])),
+        'success' => (\is_array($response) && !isset($response['error'])),
         'req' => $params
       ];
     }

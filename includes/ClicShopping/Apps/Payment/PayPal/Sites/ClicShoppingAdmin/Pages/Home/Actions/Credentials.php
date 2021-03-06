@@ -29,7 +29,7 @@
         'PF'
       ];
 
-      $this->page->data['current_module'] = (isset($_GET['module']) && in_array($_GET['module'], $modules) ? $_GET['module'] : $modules[0]);
+      $this->page->data['current_module'] = (isset($_GET['module']) && \in_array($_GET['module'], $modules) ? $_GET['module'] : $modules[0]);
 
       $data = [
         'CLICSHOPPING_APP_PAYPAL_LIVE_SELLER_EMAIL',
@@ -55,7 +55,7 @@
       ];
 
       foreach ($data as $key) {
-        if (!defined($key)) {
+        if (!\defined($key)) {
           $CLICSHOPPING_PayPal->saveCfgParam($key, '');
         }
       }

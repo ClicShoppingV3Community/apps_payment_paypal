@@ -246,7 +246,7 @@
 
           $free_shipping = false;
 
-          if (defined('MODULE_ORDER_TOTAL_SHIPPING_FREE_SHIPPING') && (MODULE_ORDER_TOTAL_SHIPPING_FREE_SHIPPING == 'true')) {
+          if (\defined('MODULE_ORDER_TOTAL_SHIPPING_FREE_SHIPPING') && (MODULE_ORDER_TOTAL_SHIPPING_FREE_SHIPPING == 'true')) {
             $pass = false;
 
             switch (MODULE_ORDER_TOTAL_SHIPPING_DESTINATION) {
@@ -267,7 +267,7 @@
                 break;
             }
 
-            if (defined('MODULE_ORDER_TOTAL_SHIPPING_FREE_SHIPPING_OVER')) {
+            if (\defined('MODULE_ORDER_TOTAL_SHIPPING_FREE_SHIPPING_OVER')) {
 //                  if (($pass === true) && ($CLICSHOPPING_Order->info['total'] >= MODULE_ORDER_TOTAL_SHIPPING_FREE_SHIPPING_OVER)) {
               if (($pass == true) && ($CLICSHOPPING_Order->info['total'] >= MODULE_ORDER_TOTAL_SHIPPING_FREE_SHIPPING_OVER)) {
 
@@ -384,7 +384,7 @@
       $pass = false;
 
       if (CLICSHOPPING_APP_PAYPAL_GATEWAY == '1') { // PayPal
-        if (in_array($_SESSION['appPayPalEcResult']['ACK'], [
+        if (\in_array($_SESSION['appPayPalEcResult']['ACK'], [
           'Success',
           'SuccessWithWarning'
         ])) {
@@ -454,7 +454,7 @@
                 'member_level' => '1'
               ];
 
-              if (isset($_SESSION['appPayPalEcResult']['PHONENUM']) && !is_null($_SESSION['appPayPalEcResult']['PHONENUM'])) {
+              if (isset($_SESSION['appPayPalEcResult']['PHONENUM']) && !\is_null($_SESSION['appPayPalEcResult']['PHONENUM'])) {
                 $customers_telephone = HTML::sanitize($_SESSION['appPayPalEcResult']['PHONENUM']);
 
                 $sql_data_array['customers_telephone'] = $customers_telephone;
@@ -472,7 +472,7 @@
               );
 
 // Only generate a password and send an email if the Set Password Content Module is not enabled
-              if (!defined('MODULE_CONTENT_ACCOUNT_SET_PASSWORD_STATUS') || (MODULE_CONTENT_ACCOUNT_SET_PASSWORD_STATUS != 'True')) {
+              if (!\defined('MODULE_CONTENT_ACCOUNT_SET_PASSWORD_STATUS') || (MODULE_CONTENT_ACCOUNT_SET_PASSWORD_STATUS != 'True')) {
                 $customer_password = Hash::getRandomString(max(ENTRY_PASSWORD_MIN_LENGTH, 8));
 
                 $this->pm->app->db->save('customers', ['customers_password' => Hash::encrypt($customer_password)],
@@ -668,7 +668,7 @@
 
           $free_shipping = false;
 
-          if (defined('MODULE_ORDER_TOTAL_SHIPPING_FREE_SHIPPING') && (MODULE_ORDER_TOTAL_SHIPPING_FREE_SHIPPING == 'true')) {
+          if (\defined('MODULE_ORDER_TOTAL_SHIPPING_FREE_SHIPPING') && (MODULE_ORDER_TOTAL_SHIPPING_FREE_SHIPPING == 'true')) {
             $pass = false;
 
             switch (MODULE_ORDER_TOTAL_SHIPPING_DESTINATION) {
@@ -734,7 +734,7 @@
               }
             }
           } else {
-            if (defined('SHIPPING_ALLOW_UNDEFINED_ZONES') && (SHIPPING_ALLOW_UNDEFINED_ZONES == 'False')) {
+            if (\defined('SHIPPING_ALLOW_UNDEFINED_ZONES') && (SHIPPING_ALLOW_UNDEFINED_ZONES == 'False')) {
               unset($_SESSION['shipping']);
 
               $CLICSHOPPING_MessageStack->add('index.php', 'Checkout&ShippingAddress&' . $this->pm->app->getDef('module_ec_error_no_shipping_available'), 'error');
@@ -901,7 +901,7 @@
         $line_item_no++;
       }
 
-      if (!empty($CLICSHOPPING_Order->delivery['street_address']) || !is_null($CLICSHOPPING_Order->delivery['street_address'])) {
+      if (!empty($CLICSHOPPING_Order->delivery['street_address']) || !\is_null($CLICSHOPPING_Order->delivery['street_address'])) {
         if (CLICSHOPPING_APP_PAYPAL_GATEWAY == '1') { // PayPal
           $params['PAYMENTREQUEST_0_SHIPTONAME'] = $CLICSHOPPING_Order->delivery['firstname'] . ' ' . $CLICSHOPPING_Order->delivery['lastname'];
           $params['PAYMENTREQUEST_0_SHIPTOSTREET'] = $CLICSHOPPING_Order->delivery['street_address'];
@@ -934,7 +934,7 @@
 
           $free_shipping = false;
 
-          if (defined('MODULE_ORDER_TOTAL_SHIPPING_FREE_SHIPPING') && (MODULE_ORDER_TOTAL_SHIPPING_FREE_SHIPPING == 'true')) {
+          if (\defined('MODULE_ORDER_TOTAL_SHIPPING_FREE_SHIPPING') && (MODULE_ORDER_TOTAL_SHIPPING_FREE_SHIPPING == 'true')) {
             $pass = false;
 
             switch (MODULE_ORDER_TOTAL_SHIPPING_DESTINATION) {
@@ -990,7 +990,7 @@
               }
             }
           } else {
-            if (defined('SHIPPING_ALLOW_UNDEFINED_ZONES') && (SHIPPING_ALLOW_UNDEFINED_ZONES == 'False')) {
+            if (\defined('SHIPPING_ALLOW_UNDEFINED_ZONES') && (SHIPPING_ALLOW_UNDEFINED_ZONES == 'False')) {
               unset($_SESSION['shipping']);
 
               $CLICSHOPPING_MessageStack->add('index.php', 'Checkout&ShippingAddress&' . $this->pm->app->getDef('module_ec_error_no_shipping_available'), 'error');
@@ -1077,7 +1077,7 @@
         $items_total = $this->pm->app->formatCurrencyRaw($CLICSHOPPING_Order->info['subtotal']);
 
         foreach ($order_totals as $ot) {
-          if (!in_array($ot['code'], [
+          if (!\in_array($ot['code'], [
             'ot_subtotal',
             'ot_shipping',
             'ot_tax',
@@ -1127,7 +1127,7 @@
         }
       }
 
-//        if (!is_null(CLICSHOPPING_APP_PAYPAL_EC_PAGE_STYLE) && (CLICSHOPPING_APP_PAYPAL_EC_CHECKOUT_FLOW == '0')) {
+//        if (!\is_null(CLICSHOPPING_APP_PAYPAL_EC_PAGE_STYLE) && (CLICSHOPPING_APP_PAYPAL_EC_CHECKOUT_FLOW == '0')) {
       if (!empty(CLICSHOPPING_APP_PAYPAL_EC_PAGE_STYLE) && (CLICSHOPPING_APP_PAYPAL_EC_CHECKOUT_FLOW == '0')) {
         $params['PAGESTYLE'] = CLICSHOPPING_APP_PAYPAL_EC_PAGE_STYLE;
       }
@@ -1144,7 +1144,7 @@
 
         $response_array = $this->pm->app->getApiResult('EC', 'SetExpressCheckout', $params);
 
-        if (in_array($response_array['ACK'], [
+        if (\in_array($response_array['ACK'], [
           'Success',
           'SuccessWithWarning'
         ])) {

@@ -39,7 +39,7 @@
 
       $this->pm = new PaymentModulePS();
 
-      if (!defined('CLICSHOPPING_APP_PAYPAL_PS_STATUS') || !in_array(CLICSHOPPING_APP_PAYPAL_PS_STATUS, [
+      if (!\defined('CLICSHOPPING_APP_PAYPAL_PS_STATUS') || !\in_array(CLICSHOPPING_APP_PAYPAL_PS_STATUS, [
           '1',
           '0'
         ])) {
@@ -52,11 +52,11 @@
 
       $seller_accounts = [$this->pm->app->getCredentials('PS', 'email')];
 
-      if (!is_null($this->pm->app->getCredentials('PS', 'email_primary'))) {
+      if (!\is_null($this->pm->app->getCredentials('PS', 'email_primary'))) {
         $seller_accounts[] = $this->pm->app->getCredentials('PS', 'email_primary');
       }
 
-      if ((isset($_POST['receiver_email']) && in_array($_POST['receiver_email'], $seller_accounts)) || (isset($_POST['business']) && in_array($_POST['business'], $seller_accounts)) || (isset($_POST['receiver_id']) && in_array($_POST['receiver_id'], $seller_accounts))) {
+      if ((isset($_POST['receiver_email']) && \in_array($_POST['receiver_email'], $seller_accounts)) || (isset($_POST['business']) && \in_array($_POST['business'], $seller_accounts)) || (isset($_POST['receiver_id']) && \in_array($_POST['receiver_id'], $seller_accounts))) {
         $parameters = 'cmd=_notify-validate&';
 
         foreach ($_POST as $key => $value) {
@@ -119,7 +119,7 @@
             $CLICSHOPPING_Order = Registry::get('Order');
 
             if (DOWNLOAD_ENABLED == 'true') {
-              for ($i = 0, $n = count($CLICSHOPPING_Order->products); $i < $n; $i++) {
+              for ($i = 0, $n = \count($CLICSHOPPING_Order->products); $i < $n; $i++) {
                 $Qdownloads = $this->pm->app->db->prepare('select opd.orders_products_filename
                                                            from :table_orders o,
                                                                 :table_orders_products op,
@@ -161,7 +161,7 @@
 // initialized for the email confirmation
             $products_ordered = '';
 
-            for ($i = 0, $n = count($CLICSHOPPING_Order->products); $i < $n; $i++) {
+            for ($i = 0, $n = \count($CLICSHOPPING_Order->products); $i < $n; $i++) {
               if (STOCK_LIMITED == 'true') {
                   if (DOWNLOAD_ENABLED == 'true') {
 
@@ -174,7 +174,7 @@
 
                     $products_attributes = $this->products['attributes'] ?? '';
 
-                    if (is_array($products_attributes)) {
+                    if (\is_array($products_attributes)) {
                       $stock_query_sql .= ' and pa.options_id = :options_id
                                            and pa.options_values_id = :options_values_id
                                         ';
@@ -184,7 +184,7 @@
 
                     $Qstock->bindInt(':products_id', $CLICSHOPPING_Prod::getProductID($CLICSHOPPING_Order->products[$i]['id']));
 
-                    if (is_array($products_attributes)) {
+                    if (\is_array($products_attributes)) {
                       $Qstock->bindInt(':options_id', $products_attributes['option_id']);
                       $Qstock->bindInt(':options_values_id', $products_attributes['value_id']);
                     }
@@ -236,7 +236,7 @@
 // otherwise, we have to build the query dynamically with a loop
                   $products_attributes = $CLICSHOPPING_Order->products[$i]['attributes'] ?? '';
 
-                  if (is_array($products_attributes)) {
+                  if (\is_array($products_attributes)) {
                     $stock_query_sql .= ' and pa.options_id = :options_id
                                             and pa.options_values_id = :options_values_id';
                   }
@@ -244,7 +244,7 @@
                   $Qstock = $this->pm->app->db->prepare($stock_query_sql);
                   $Qstock->bindInt(':products_id', $CLICSHOPPING_Prod::getProductID($CLICSHOPPING_Order->products[$i]['id']));
 
-                  if (is_array($products_attributes)) {
+                  if (\is_array($products_attributes)) {
                     $Qstock->bindInt(':options_id', $products_attributes[0]['option_id']);
                     $Qstock->bindInt(':options_values_id', $products_attributes[0]['value_id']);
                   }
@@ -297,7 +297,7 @@
               $products_ordered_attributes = '';
 
               if (isset($CLICSHOPPING_Order->products[$i]['attributes'])) {
-                for ($j = 0, $n2 = count($CLICSHOPPING_Order->products[$i]['attributes']); $j < $n2; $j++) {
+                for ($j = 0, $n2 = \count($CLICSHOPPING_Order->products[$i]['attributes']); $j < $n2; $j++) {
                   $products_ordered_attributes .= "\n\t" . $CLICSHOPPING_Order->products[$i]['attributes'][$j]['option'] . ' ' . $CLICSHOPPING_Order->products[$i]['attributes'][$j]['value'];
                 }
               }
@@ -330,7 +330,7 @@
 
             $email_total = '';
 
-            for ($i = 0, $n = count($CLICSHOPPING_Order->totals); $i < $n; $i++) {
+            for ($i = 0, $n = \count($CLICSHOPPING_Order->totals); $i < $n; $i++) {
               $email_total .= strip_tags($CLICSHOPPING_Order->totals[$i]['title']) . ' ' . strip_tags($CLICSHOPPING_Order->totals[$i]['text']) . "\n";
             }
 

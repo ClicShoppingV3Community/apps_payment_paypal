@@ -29,7 +29,7 @@
         'url' => ''
       ]), true);
 
-      if (is_array($response) && isset($response['title'])) {
+      if (\is_array($response) && isset($response['title'])) {
         $result = $response;
 
         $result['rpcStatus'] = 1;

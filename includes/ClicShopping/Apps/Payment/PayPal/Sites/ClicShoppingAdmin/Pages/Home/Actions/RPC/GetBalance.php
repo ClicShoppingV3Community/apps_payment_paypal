@@ -26,7 +26,7 @@
         'rpcStatus' => -1
       ];
 
-      if (isset($_GET['type']) && in_array($_GET['type'], [
+      if (isset($_GET['type']) && \in_array($_GET['type'], [
           'live',
           'sandbox'
         ])) {
@@ -37,12 +37,12 @@
         } else {
           $response = $CLICSHOPPING_PayPal->getApiResult('APP', 'GetBalance', null, $_GET['type']);
 
-          if (is_array($response) && isset($response['ACK']) && ($response['ACK'] == 'Success')) {
+          if (\is_array($response) && isset($response['ACK']) && ($response['ACK'] == 'Success')) {
             $PayPalCache->save($response);
           }
         }
 
-        if (is_array($response) && isset($response['ACK']) && ($response['ACK'] == 'Success')) {
+        if (\is_array($response) && isset($response['ACK']) && ($response['ACK'] == 'Success')) {
           $result['rpcStatus'] = 1;
 
           $counter = 0;

@@ -29,7 +29,7 @@
     {
       $do_log = false;
 
-      if (defined('CLICSHOPPING_APP_PAYPAL_LOG_TRANSACTIONS') && in_array(CLICSHOPPING_APP_PAYPAL_LOG_TRANSACTIONS, ['1', '0'])) {
+      if (\defined('CLICSHOPPING_APP_PAYPAL_LOG_TRANSACTIONS') && \in_array(CLICSHOPPING_APP_PAYPAL_LOG_TRANSACTIONS, ['1', '0'])) {
         $do_log = true;
 
         if ((CLICSHOPPING_APP_PAYPAL_LOG_TRANSACTIONS == '0') && ($result === 1)) {
@@ -45,9 +45,9 @@
 
       $request_string = '';
 
-      if (is_array($request)) {
+      if (\is_array($request)) {
         foreach ($request as $key => $value) {
-          if ((strpos($key, '_nh-dns') !== false) || in_array($key, $filter)) {
+          if ((strpos($key, '_nh-dns') !== false) || \in_array($key, $filter)) {
             $value = '**********';
           }
 
@@ -59,11 +59,11 @@
 
       $response_string = '';
 
-      if (is_array($response)) {
+      if (\is_array($response)) {
         foreach ($response as $key => $value) {
-          if (is_array($value)) {
+          if (\is_array($value)) {
             $value = http_build_query($value);
-          } elseif ((strpos($key, '_nh-dns') !== false) || in_array($key, $filter)) {
+          } elseif ((strpos($key, '_nh-dns') !== false) || \in_array($key, $filter)) {
             $value = '**********';
           }
 
@@ -92,7 +92,7 @@
       $migrated = false;
 
       foreach ($this->getConfigModules() as $module) {
-        if (!defined('CLICSHOPPING_APP_PAYPAL_' . $module . '_STATUS') && $this->getConfigModuleInfo($module, 'is_migratable')) {
+        if (!\defined('CLICSHOPPING_APP_PAYPAL_' . $module . '_STATUS') && $this->getConfigModuleInfo($module, 'is_migratable')) {
           $this->saveCfgParam('CLICSHOPPING_APP_PAYPAL_' . $module . '_STATUS', '');
 
           $m = Registry::get('PayPalAdminConfig' . $module);
@@ -130,7 +130,7 @@
                 if ($sort_order > 0) {
                   $counter = $sort_order;
                 } else {
-                  $counter = count($result);
+                  $counter = \count($result);
                 }
 
                 while (true) {
@@ -171,13 +171,13 @@
     public function hasCredentials($module, $type = null)
     {
 
-      if (!defined('CLICSHOPPING_APP_PAYPAL_' . $module . '_STATUS')) {
+      if (!\defined('CLICSHOPPING_APP_PAYPAL_' . $module . '_STATUS')) {
         return false;
       }
 
       $server = constant('CLICSHOPPING_APP_PAYPAL_' . $module . '_STATUS');
 
-      if (!in_array($server, array('1', '2'))) {
+      if (!\in_array($server, array('1', '2'))) {
         return false;
       }
 
@@ -201,7 +201,7 @@
       }
 
       foreach ($creds as $c) {
-        if (!defined($c) || (strlen(trim(constant($c))) < 1)) {
+        if (!\defined($c) || (strlen(trim(constant($c))) < 1)) {
           return false;
         }
       }
@@ -251,7 +251,7 @@
       }
 
       foreach ($creds as $c) {
-        if (!defined($c) || (strlen(trim(constant($c))) < 1)) {
+        if (!\defined($c) || (strlen(trim(constant($c))) < 1)) {
           return false;
         }
       }
@@ -261,9 +261,9 @@
 
     public function getApiCredentials($server, $type)
     {
-      if (($server == 'live') && defined('CLICSHOPPING_APP_PAYPAL_LIVE_API_' . strtoupper($type))) {
+      if (($server == 'live') && \defined('CLICSHOPPING_APP_PAYPAL_LIVE_API_' . strtoupper($type))) {
         return constant('CLICSHOPPING_APP_PAYPAL_LIVE_API_' . strtoupper($type));
-      } elseif (defined('CLICSHOPPING_APP_PAYPAL_SANDBOX_API_' . strtoupper($type))) {
+      } elseif (\defined('CLICSHOPPING_APP_PAYPAL_SANDBOX_API_' . strtoupper($type))) {
         return constant('CLICSHOPPING_APP_PAYPAL_SANDBOX_API_' . strtoupper($type));
       }
     }

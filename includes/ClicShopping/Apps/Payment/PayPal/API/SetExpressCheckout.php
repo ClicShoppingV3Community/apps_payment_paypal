@@ -42,7 +42,7 @@
 
       return [
         'res' => $response,
-        'success' => in_array($response['ACK'], ['Success', 'SuccessWithWarning']),
+        'success' => \in_array($response['ACK'], ['Success', 'SuccessWithWarning']),
         'req' => $params
       ];
     }
