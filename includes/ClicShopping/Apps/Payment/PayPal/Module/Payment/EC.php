@@ -22,12 +22,16 @@
 
   class EC implements \ClicShopping\OM\Modules\PaymentInterface
   {
-
-    public string $code;
+    public $code;
     public $title;
     public $description;
-    public $enabled;
+    public $enabled = false;
     public $app;
+    public $signature;
+    public $public_title;
+    public $sort_order = 0;
+    protected $api_version;
+    public $group;
 
     public function __construct()
     {
@@ -50,7 +54,7 @@
       $this->code = 'EC';
       $this->title = $this->app->getDef('module_ec_title');
       $this->public_title = $this->app->getDef('module_ec_public_title');
-      $this->description = '<div class="text-md-center">' . HTML::button($this->app->getDef('module_ec_legacy_admin_app_button'), null, $this->app->link('Configure&module=EC'), 'primary') . '</div>';
+      $this->description = '<div class="text-center">' . HTML::button($this->app->getDef('module_ec_legacy_admin_app_button'), null, $this->app->link('Configure&module=EC'), 'primary') . '</div>';
 
 // Activation module du paiement selon les groupes B2B
 

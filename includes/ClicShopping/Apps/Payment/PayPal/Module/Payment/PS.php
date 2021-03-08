@@ -26,12 +26,16 @@
 
   class PS implements \ClicShopping\OM\Modules\PaymentInterface
   {
-
-    public string $code;
+    public $code;
     public $title;
     public $description;
-    public $enabled;
+    public $enabled = false;
     public $app;
+    public $signature;
+    public $public_title;
+    public $sort_order = 0;
+    protected $api_version;
+    public $group;
 
     protected $lang;
 
@@ -58,7 +62,7 @@
       $this->code = 'PS';
       $this->title = $this->app->getDef('module_ps_title');
       $this->public_title = $this->app->getDef('module_ps_public_title');
-      $this->description = '<div class="text-md-center">' . HTML::button($this->app->getDef('module_ps_legacy_admin_app_button'), null, $this->app->link('Configure&module=PS'), 'primary') . '</div>';
+      $this->description = '<div class="text-center">' . HTML::button($this->app->getDef('module_ps_legacy_admin_app_button'), null, $this->app->link('Configure&module=PS'), 'primary') . '</div>';
 
 // Activation module du paiement selon les groupes B2B
 
@@ -221,7 +225,7 @@
 
           $Qorder = $this->app->db->get('orders', 'currency', ['orders_id' => (int)$this->order_id]);
 
-          if (($Qorder->value('currency') != $CLICSHOPPING_Order->info['currency']) || ($_SESSION['cartID'] != substr($_SESSION['cart_PayPal_Standard_ID'], 0, strlen($_SESSION['cartID'])))) {
+          if (($Qorder->value('currency') != $CLICSHOPPING_Order->info['currency']) || ($_SESSION['cartID'] != substr($_SESSION['cart_PayPal_Standard_ID'], 0, \strlen($_SESSION['cartID'])))) {
 
             $Qcheck = $this->app->db->get('orders_status_history', 'orders_id', ['orders_id' => (int)$this->order_id],
               null,
@@ -471,7 +475,7 @@
 
       $return_link_title = $this->app->getDef('module_ps_button_return_to_store', ['store_name' => STORE_NAME]);
 
-      if (strlen($return_link_title) <= 60) {
+      if (\strlen($return_link_title) <= 60) {
         $parameters['cbt'] = $return_link_title;
       }
 
@@ -634,7 +638,7 @@
         }
       }
 
-      $process_button_string .= '<div class="text-md-right">' . HTML::button($this->app->getDef('text_button_paypal'), null, null, 'primary',  ['type' => 'submit', 'params' => 'onclick="submitButtonClick(event)" data-button="payNow"']) . '</div>';
+      $process_button_string .= '<div class="text-end">' . HTML::button($this->app->getDef('text_button_paypal'), null, null, 'primary',  ['type' => 'submit', 'params' => 'onclick="submitButtonClick(event)" data-button="payNow"']) . '</div>';
 
       return $process_button_string;
     }
@@ -951,7 +955,7 @@
               );
             }
 
-// Alert by mail product sold_out if a product is 0 or < 0
+// Alert by mail product sold out if a product is 0 or < 0
             if (STOCK_ALERT_PRODUCT_SOLD_OUT == 'true') {
               if (($stock_left < 1) && (STOCK_ALLOW_CHECKOUT == 'false') && (STOCK_CHECK == 'true')) {
                 $email_text_subject_stock = stripslashes(CLICSHOPPING::getDef('email_text_subject_stock', ['store_name' => STORE_NAME]));
@@ -1069,7 +1073,7 @@
         $text[] = TemplateEmail::getExtractEmailAddress(SEND_EXTRA_ORDER_EMAILS_TO);
 
         foreach ($text as $key => $email) {
-          $CLICSHOPPING_Mail->clicMail('', $email[$key], $email_text_subject, $email_order, STORE_OWNER, STORE_OWNER_EMAIL_ADDRESS);
+          $CLICSHOPPING_Mail->clicMail(null, $email[$key], $email_text_subject, $email_order, STORE_OWNER, STORE_OWNER_EMAIL_ADDRESS);
         }
       }
 

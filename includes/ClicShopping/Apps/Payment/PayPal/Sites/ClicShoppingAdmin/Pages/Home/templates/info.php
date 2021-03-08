@@ -150,7 +150,7 @@
     <div class="separator"></div>
   </div>
 
-  <div class="text-md-center">
+  <div class="text-center">
     <small><?php echo $CLICSHOPPING_PayPal->getDef('text_license'); ?></small>
   </div>
 

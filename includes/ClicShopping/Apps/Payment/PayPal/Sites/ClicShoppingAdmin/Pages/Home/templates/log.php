@@ -33,7 +33,7 @@
   $Qlog->execute();
 ?>
 
-  <div class="text-md-right">
+  <div class="text-end">
     <?php echo HTML::button($CLICSHOPPING_PayPal->getDef('button_dialog_delete'), null, '#', 'danger', ['params' => 'data-button="delLogs"']); ?>
   </div>
   <div class="separator"></div>
@@ -43,7 +43,7 @@
       <th colspan="2"><?php echo $CLICSHOPPING_PayPal->getDef('table_heading_action'); ?></th>
       <th><?php echo $CLICSHOPPING_PayPal->getDef('table_heading_ip'); ?></th>
       <th><?php echo $CLICSHOPPING_PayPal->getDef('table_heading_customer'); ?></th>
-      <th class="text-md-right"><?php echo $CLICSHOPPING_PayPal->getDef('table_heading_date'); ?></th>
+      <th class="text-end"><?php echo $CLICSHOPPING_PayPal->getDef('table_heading_date'); ?></th>
       <th class="action"></th>
     </tr>
     </thead>
@@ -64,15 +64,15 @@
 ?>
 
           <tr>
-            <td class="text-md-center" style="width: 30px;"><span
+            <td class="text-center" style="width: 30px;"><span
                 class="label <?php echo ($Qlog->valueInt('result') === 1) ? 'label-success' : 'label-danger'; ?>"><?php echo $Qlog->value('module'); ?></span>
             </td>
             <td><?php echo $Qlog->value('action'); ?></td>
             <td><?php echo long2ip($Qlog->value('ip_address')); ?></td>
             <td><?php echo (!empty($customers_name)) ? HTML::outputProtected($customers_name) : '<i>' . $CLICSHOPPING_PayPal->getDef('guest') . '</i>'; ?></td>
             <td
-              class="text-md-center"><?php echo date(CLICSHOPPING::getDef('php_date_time_format'), $Qlog->value('date_added')); ?></td>
-            <td class="text-md-center"><a
+              class="text-center"><?php echo date(CLICSHOPPING::getDef('php_date_time_format'), $Qlog->value('date_added')); ?></td>
+            <td class="text-center"><a
                 href="<?php echo $CLICSHOPPING_PayPal->link('Log&View&page=' . (isset($_GET['page']) ? $_GET['page'] : 1) . '&lID=' . $Qlog->valueInt('id')); ?>"><?php echo HTML::image($CLICSHOPPING_Template->getImageDirectory() . 'icons/edit.gif', CLICSHOPPING::getDef('image_edit')); ?></a>
             </td>
           </tr>
@@ -102,7 +102,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><span
               aria-hidden="true">&times;</span></button>
           <h4 class="modal-title"><?php echo $CLICSHOPPING_PayPal->getDef('dialog_delete_title'); ?></h4>
         </div>
@@ -113,7 +113,7 @@
 
         <div class="modal-footer">
           <?php echo HTML::button($CLICSHOPPING_PayPal->getDef('button_delete'), null, $CLICSHOPPING_PayPal->link('Log&DeleteAll'), 'danger'); ?>
-          <?php echo HTML::button($CLICSHOPPING_PayPal->getDef('button_cancel'), null, '#', 'warning', ['params' => 'data-dismiss="modal"']); ?>
+          <?php echo HTML::button($CLICSHOPPING_PayPal->getDef('button_cancel'), null, '#', 'warning', ['params' => 'data-bs-dismiss="modal"']); ?>
         </div>
       </div>
     </div>

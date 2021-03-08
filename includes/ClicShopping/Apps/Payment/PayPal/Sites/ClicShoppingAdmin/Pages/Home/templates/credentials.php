@@ -41,7 +41,7 @@
       require_once(__DIR__ . '/credentials_' . strtolower($current_module) . '.php');
     ?>
     <br/><br/>
-    <div class="col-md-12 text-md-right">
+    <div class="col-md-12 text-end">
 
       <?php echo HTML::button($CLICSHOPPING_PayPal->getDef('button_save'), null, null, 'success'); ?>
     </div>

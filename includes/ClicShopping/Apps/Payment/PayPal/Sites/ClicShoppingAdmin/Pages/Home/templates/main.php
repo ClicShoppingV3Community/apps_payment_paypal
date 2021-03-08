@@ -25,7 +25,7 @@
           <div class="row">
             <div class="col-md-12"><?php echo '&nbsp;' . $CLICSHOPPING_PayPal->getDef('onboarding_intro_body'); ?></div>
 
-            <div class="col-md-12 text-md-right">
+            <div class="col-md-12 text-end">
               <?php echo
               $CLICSHOPPING_PayPal->getDef('manage_credentials_body', [
                 'button_manage_credentials' => HTML::button($CLICSHOPPING_PayPal->getDef('button_manage_credentials'), null, $CLICSHOPPING_PayPal->link('Credentials'), 'info')

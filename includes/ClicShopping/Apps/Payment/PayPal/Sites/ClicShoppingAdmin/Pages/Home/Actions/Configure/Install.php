@@ -38,7 +38,6 @@
 
     private function installDb()
     {
-
       $Qcheck = $this->app->db->query('show tables like ":table_clicshopping_app_paypal_log"');
 
       if ($Qcheck->fetch() === false) {

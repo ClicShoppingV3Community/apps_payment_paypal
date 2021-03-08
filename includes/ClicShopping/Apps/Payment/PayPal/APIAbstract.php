@@ -57,7 +57,7 @@
         $value = utf8_encode(trim($value));
 
         if ($this->type == 'payflow') {
-          $key = $key . '[' . strlen($value) . ']';
+          $key = $key . '[' . \strlen($value) . ']';
         }
 
         $post[$key] = $value;

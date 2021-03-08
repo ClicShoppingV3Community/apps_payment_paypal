@@ -17,7 +17,7 @@
   require_once(__DIR__ . '/template_top.php');
 ?>
 
-  <div class="text-md-right">
+  <div class="text-end">
     <?php echo HTML::button($CLICSHOPPING_PayPal->getDef('button_back'), null, $CLICSHOPPING_PayPal->link('Log&page=' . (int)$_GET['page']), 'primary'); ?>
   </div>
   <div class="separator"></div>

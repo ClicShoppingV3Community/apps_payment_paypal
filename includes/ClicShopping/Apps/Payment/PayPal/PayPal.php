@@ -47,7 +47,7 @@
 
       if (\is_array($request)) {
         foreach ($request as $key => $value) {
-          if ((strpos($key, '_nh-dns') !== false) || \in_array($key, $filter)) {
+          if ((str_contains($key, '_nh-dns')) || \in_array($key, $filter)) {
             $value = '**********';
           }
 
@@ -63,7 +63,7 @@
         foreach ($response as $key => $value) {
           if (\is_array($value)) {
             $value = http_build_query($value);
-          } elseif ((strpos($key, '_nh-dns') !== false) || \in_array($key, $filter)) {
+          } elseif ((str_contains($key, '_nh-dns')) || \in_array($key, $filter)) {
             $value = '**********';
           }
 
@@ -186,7 +186,7 @@
       if ($type == 'email') {
         $creds = array('CLICSHOPPING_APP_PAYPAL_' . $server . '_SELLER_EMAIL');
       } elseif (substr($type, 0, 7) == 'payflow') {
-        if (strlen($type) > 7) {
+        if (\strlen($type) > 7) {
           $creds = ['CLICSHOPPING_APP_PAYPAL_PF_' . $server . '_' . strtoupper(substr($type, 8))];
         } else {
           $creds = ['CLICSHOPPING_APP_PAYPAL_PF_' . $server . '_VENDOR',
@@ -201,7 +201,7 @@
       }
 
       foreach ($creds as $c) {
-        if (!\defined($c) || (strlen(trim(constant($c))) < 1)) {
+        if (!\defined($c) || (\strlen(trim(constant($c))) < 1)) {
           return false;
         }
       }
@@ -251,7 +251,7 @@
       }
 
       foreach ($creds as $c) {
-        if (!\defined($c) || (strlen(trim(constant($c))) < 1)) {
+        if (!\defined($c) || (\strlen(trim(constant($c))) < 1)) {
           return false;
         }
       }

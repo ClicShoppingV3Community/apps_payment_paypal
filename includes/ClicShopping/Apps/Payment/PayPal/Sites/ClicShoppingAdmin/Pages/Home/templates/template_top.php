@@ -58,8 +58,8 @@
             class="col-md-1 logoHeading"><?php echo HTML::image($CLICSHOPPING_Template->getImageDirectory() . 'categories/modules_modules_checkout_payment.gif', $CLICSHOPPING_PayPal->getDef('Paypal'), '40', '40'); ?></span>
           <span
             class="col-md-4 pageHeading"><?php echo '&nbsp;' . $CLICSHOPPING_PayPal->getDef('Paypal') . ' v' . $CLICSHOPPING_PayPal->getVersion(); ?></span>
-          <span class="col-md-7 text-md-right">
-          <span class="text-md-right"
+          <span class="col-md-7 text-end">
+          <span class="text-end"
                 style="padding-left:5px;"><?php echo '<a href="' . $CLICSHOPPING_PayPal->link('Info') . '">' . $CLICSHOPPING_PayPal->getDef('app_link_info') . '</a> <a href="' . $CLICSHOPPING_PayPal->link('Privacy') . '">' . $CLICSHOPPING_PayPal->getDef('app_link_privacy') . '</a>'; ?></span>
         </span>
         </div>

@@ -23,11 +23,15 @@
      "HS":	"Module\\Payment\\HS",
      "PS":	"Module\\Payment\\PS"
 		},
-		"Hooks": {
-			"Shop/Account": {
-				"Logout":	"Module\\Hooks\\Shop\\Account\\Logout"
-			}
+	"Hooks": {
+		"ClicShoppingAdmin/Orders": {
+			"Action":	"Module\\Hooks\\ClicShoppingAdmin\\Orders\\Action",
+			"PageTab":		"Module\\Hooks\\ClicShoppingAdmin\\Orders\\PageTab"
+		},
+		"Shop/Account": {
+			"Logout":	"Module\\Hooks\\Shop\\Account\\Logout"
 		}
+	  }
 	},
 	"routes": {
 		"ClicShoppingAdmin":	"Sites\\ClicShoppingAdmin\\Pages\\Home",

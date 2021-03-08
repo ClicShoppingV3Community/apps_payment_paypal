@@ -19,6 +19,7 @@
   class PayPal extends \ClicShopping\OM\Modules\AdminDashboardAbstract
   {
     protected $app;
+    public $group;
 
     protected function init()
     {
@@ -55,7 +56,7 @@
       $content_width = 'col-lg-' . (int)MODULE_ADMIN_DASHBOARD_PAYPAL_APP_CONTENT_WIDTH;
 
       $output = <<<EOD
-        <span class="$content_width text-md-center">
+        <span class="$content_width text-center">
 <script>
 var CLICSHOPPING = {
   htmlSpecialChars: function(string) {
@@ -168,7 +169,7 @@ $(function() {
   (function() {
     var pass = false;
 
-    if ( CLICSHOPPING.APP.PAYPAL.accountTypes['live'] == true ) {
+    if ( CLICSHOPPING.APP.PAYPAL.accountTypes['live'] === true ) {
       pass = true;
 
       $('#ppAccountBalanceSandbox').hide();
@@ -177,7 +178,7 @@ $(function() {
     } else {
       $('#ppAccountBalanceLive').hide();
 
-      if ( CLICSHOPPING.APP.PAYPAL.accountTypes['sandbox'] == true ) {
+      if ( CLICSHOPPING.APP.PAYPAL.accountTypes['sandbox'] === true ) {
         pass = true;
 
         CLICSHOPPING.APP.PAYPAL.getBalance('sandbox');

@@ -748,7 +748,7 @@
           $CLICSHOPPING_SM = null;
 
 
-          if (strpos($_SESSION['shipping'], '\\') !== false) {
+          if (str_contains($_SESSION['shipping'], '\\')) {
             [$vendor, $app, $module] = explode('\\', $_SESSION['shipping']);
             [$module, $method] = explode('_', $module);
 
@@ -762,6 +762,8 @@
           }
 
           if (isset($CLICSHOPPING_SM) || ($_SESSION['shipping'] == 'free_free')) {
+            $quote = [];
+
             if ($_SESSION['shipping'] == 'free_free') {
               $quote[0]['methods'][0]['title'] = CLICSHOPPING::getDef('free_shipping_title');
               $quote[0]['methods'][0]['cost'] = '0';
