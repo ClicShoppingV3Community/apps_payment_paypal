@@ -19,7 +19,7 @@
   {
     protected $pm_code = 'paypal_standard';
 
-    public $is_uninstallable = true;
+    public bool $is_uninstallable = true;
     public $is_migratable = true;
     public $sort_order = 400;
 
@@ -100,7 +100,7 @@
 
         if (\defined('MODULE_PAYMENT_PAYPAL_STANDARD_ID')) {
           if (!\is_null(MODULE_PAYMENT_PAYPAL_STANDARD_ID)) {
-            if (!\defined('CLICSHOPPING_APP_PAYPAL_' . $server . '_SELLER_EMAIL') || !!\is_null(constant('CLICSHOPPING_APP_PAYPAL_' . $server . '_SELLER_EMAIL'))) {
+            if (!\defined('CLICSHOPPING_APP_PAYPAL_' . $server . '_SELLER_EMAIL') || !!\is_null(\constant('CLICSHOPPING_APP_PAYPAL_' . $server . '_SELLER_EMAIL'))) {
               $this->app->saveCfgParam('CLICSHOPPING_APP_PAYPAL_' . $server . '_SELLER_EMAIL', MODULE_PAYMENT_PAYPAL_STANDARD_ID);
             }
           }
@@ -110,7 +110,7 @@
 
         if (\defined('MODULE_PAYMENT_PAYPAL_STANDARD_PRIMARY_ID')) {
           if (!\is_null(MODULE_PAYMENT_PAYPAL_STANDARD_PRIMARY_ID)) {
-            if (!\defined('CLICSHOPPING_APP_PAYPAL_' . $server . '_SELLER_EMAIL_PRIMARY') || !!\is_null(constant('CLICSHOPPING_APP_PAYPAL_' . $server . '_SELLER_EMAIL_PRIMARY'))) {
+            if (!\defined('CLICSHOPPING_APP_PAYPAL_' . $server . '_SELLER_EMAIL_PRIMARY') || !!\is_null(\constant('CLICSHOPPING_APP_PAYPAL_' . $server . '_SELLER_EMAIL_PRIMARY'))) {
               $this->app->saveCfgParam('CLICSHOPPING_APP_PAYPAL_' . $server . '_SELLER_EMAIL_PRIMARY', MODULE_PAYMENT_PAYPAL_STANDARD_PRIMARY_ID);
             }
           }
