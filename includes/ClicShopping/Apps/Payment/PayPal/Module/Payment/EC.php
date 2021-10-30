@@ -22,14 +22,14 @@
 
   class EC implements \ClicShopping\OM\Modules\PaymentInterface
   {
-    public $code;
+    public string $code;
     public $title;
     public $description;
     public $enabled = false;
-    public $app;
+    public mixed $app;
     public $signature;
     public $public_title;
-    public $sort_order = 0;
+    public ?int $sort_order = 0;
     protected $api_version;
     public $group;
 
@@ -115,7 +115,7 @@
       }
 
       if ($this->enabled === true) {
-        if (isset($CLICSHOPPING_Order) && is_object($CLICSHOPPING_Order)) {
+        if (isset($CLICSHOPPING_Order) && \is_object($CLICSHOPPING_Order)) {
           $this->update_status();
         }
       }

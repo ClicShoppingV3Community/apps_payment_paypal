@@ -30,7 +30,7 @@
     public $title;
     public $description;
     public $enabled = false;
-    public $app;
+    public mixed $app;
     public $signature;
     public $public_title;
     public ?int $sort_order = 0;
@@ -122,7 +122,7 @@
       }
 
       if ($this->enabled === true) {
-        if (isset($CLICSHOPPING_Order) && is_object($CLICSHOPPING_Order)) {
+        if (isset($CLICSHOPPING_Order) && \is_object($CLICSHOPPING_Order)) {
           $this->update_status();
         }
       }
@@ -130,7 +130,7 @@
 // Before the stock quantity check is performed in Checkout&Process, detect if the quantity
 // has already beed deducated in the IPN to avoid a quantity == 0 redirect
       if ($this->enabled === true) {
-        if (isset($_GET['Checkout']) && isset($_GET['Process'])) {
+        if (isset($_GET['Checkout'], $_GET['Process'])) {
           if (isset($_SESSION['payment']) && ($_SESSION['payment'] == $this->app->vendor . '\\' . $this->app->code . '\\' . $this->code)) {
             $this->pre_before_check();
           }

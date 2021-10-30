@@ -29,7 +29,7 @@
     protected $file = null;
     protected $use_site_template = false;
     protected $pm;
-    protected $lang;
+    protected mixed $lang;
 
     protected function init()
     {

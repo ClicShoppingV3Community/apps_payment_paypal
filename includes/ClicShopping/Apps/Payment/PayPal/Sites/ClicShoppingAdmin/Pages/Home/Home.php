@@ -21,7 +21,7 @@
 
   class Home extends \ClicShopping\OM\PagesAbstract
   {
-    public $app;
+    public mixed $app;
 
     protected function init()
     {
@@ -68,7 +68,7 @@
         ];
 
         foreach ($paypal_menu_check as $value) {
-          if (\defined($value) && !empty(constant($value))) {
+          if (\defined($value) && !empty(\constant($value))) {
             $this->runAction('Configure');
             break;
           }

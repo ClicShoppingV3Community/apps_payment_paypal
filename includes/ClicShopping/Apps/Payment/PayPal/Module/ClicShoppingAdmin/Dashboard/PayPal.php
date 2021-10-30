@@ -18,7 +18,7 @@
 
   class PayPal extends \ClicShopping\OM\Modules\AdminDashboardAbstract
   {
-    protected $app;
+    protected mixed $app;
     public $group;
 
     protected function init()

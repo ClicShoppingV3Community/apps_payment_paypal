@@ -175,7 +175,7 @@
         return false;
       }
 
-      $server = constant('CLICSHOPPING_APP_PAYPAL_' . $module . '_STATUS');
+      $server = \constant('CLICSHOPPING_APP_PAYPAL_' . $module . '_STATUS');
 
       if (!\in_array($server, array('1', '2'))) {
         return false;
@@ -201,7 +201,7 @@
       }
 
       foreach ($creds as $c) {
-        if (!\defined($c) || (\strlen(trim(constant($c))) < 1)) {
+        if (!\defined($c) || (\strlen(trim(\constant($c))) < 1)) {
           return false;
         }
       }
@@ -212,26 +212,26 @@
     public function getCredentials($module, $type)
     {
 
-      if (constant('CLICSHOPPING_APP_PAYPAL_' . $module . '_STATUS') == '1') {
+      if (\constant('CLICSHOPPING_APP_PAYPAL_' . $module . '_STATUS') == '1') {
         if ($type == 'email') {
-          return constant('CLICSHOPPING_APP_PAYPAL_LIVE_SELLER_EMAIL');
+          return \constant('CLICSHOPPING_APP_PAYPAL_LIVE_SELLER_EMAIL');
         } elseif ($type == 'email_primary') {
-          return constant('CLICSHOPPING_APP_PAYPAL_LIVE_SELLER_EMAIL_PRIMARY');
+          return \constant('CLICSHOPPING_APP_PAYPAL_LIVE_SELLER_EMAIL_PRIMARY');
         } elseif (substr($type, 0, 7) == 'payflow') {
-          return constant('CLICSHOPPING_APP_PAYPAL_PF_LIVE_' . strtoupper(substr($type, 8)));
+          return \constant('CLICSHOPPING_APP_PAYPAL_PF_LIVE_' . strtoupper(substr($type, 8)));
         } else {
-          return constant('CLICSHOPPING_APP_PAYPAL_LIVE_API_' . strtoupper($type));
+          return \constant('CLICSHOPPING_APP_PAYPAL_LIVE_API_' . strtoupper($type));
         }
       }
 
       if ($type == 'email') {
-        return constant('CLICSHOPPING_APP_PAYPAL_SANDBOX_SELLER_EMAIL');
+        return \constant('CLICSHOPPING_APP_PAYPAL_SANDBOX_SELLER_EMAIL');
       } elseif ($type == 'email_primary') {
-        return constant('CLICSHOPPING_APP_PAYPAL_SANDBOX_SELLER_EMAIL_PRIMARY');
+        return \constant('CLICSHOPPING_APP_PAYPAL_SANDBOX_SELLER_EMAIL_PRIMARY');
       } elseif (substr($type, 0, 7) == 'payflow') {
-        return constant('CLICSHOPPING_APP_PAYPAL_PF_SANDBOX_' . strtoupper(substr($type, 8)));
+        return \constant('CLICSHOPPING_APP_PAYPAL_PF_SANDBOX_' . strtoupper(substr($type, 8)));
       } else {
-        return constant('CLICSHOPPING_APP_PAYPAL_SANDBOX_API_' . strtoupper($type));
+        return \constant('CLICSHOPPING_APP_PAYPAL_SANDBOX_API_' . strtoupper($type));
       }
     }
 
@@ -251,7 +251,7 @@
       }
 
       foreach ($creds as $c) {
-        if (!\defined($c) || (\strlen(trim(constant($c))) < 1)) {
+        if (!\defined($c) || (\strlen(trim(\constant($c))) < 1)) {
           return false;
         }
       }
@@ -262,9 +262,9 @@
     public function getApiCredentials($server, $type)
     {
       if (($server == 'live') && \defined('CLICSHOPPING_APP_PAYPAL_LIVE_API_' . strtoupper($type))) {
-        return constant('CLICSHOPPING_APP_PAYPAL_LIVE_API_' . strtoupper($type));
+        return \constant('CLICSHOPPING_APP_PAYPAL_LIVE_API_' . strtoupper($type));
       } elseif (\defined('CLICSHOPPING_APP_PAYPAL_SANDBOX_API_' . strtoupper($type))) {
-        return constant('CLICSHOPPING_APP_PAYPAL_SANDBOX_API_' . strtoupper($type));
+        return \constant('CLICSHOPPING_APP_PAYPAL_SANDBOX_API_' . strtoupper($type));
       }
     }
 

@@ -18,7 +18,7 @@
     protected $pm_code = 'paypal_express';
     protected $pm_pf_code = 'paypal_pro_payflow_ec';
 
-    public $is_uninstallable = true;
+    public bool $is_uninstallable = true;
     public $is_migratable = true;
     public $sort_order = 100;
 
@@ -105,7 +105,7 @@
 
         if (\defined('MODULE_PAYMENT_PAYPAL_EXPRESS_SELLER_ACCOUNT')) {
           if (!\is_null(MODULE_PAYMENT_PAYPAL_EXPRESS_SELLER_ACCOUNT)) {
-            if (!\defined('CLICSHOPPING_APP_PAYPAL_' . $server . '_SELLER_EMAIL') || !!\is_null(constant('CLICSHOPPING_APP_PAYPAL_' . $server . '_SELLER_EMAIL'))) {
+            if (!\defined('CLICSHOPPING_APP_PAYPAL_' . $server . '_SELLER_EMAIL') || !!\is_null(\constant('CLICSHOPPING_APP_PAYPAL_' . $server . '_SELLER_EMAIL'))) {
               $this->app->saveCfgParam('CLICSHOPPING_APP_PAYPAL_' . $server . '_SELLER_EMAIL', MODULE_PAYMENT_PAYPAL_EXPRESS_SELLER_ACCOUNT);
             }
           }
@@ -115,9 +115,9 @@
 
         if (\defined('MODULE_PAYMENT_PAYPAL_EXPRESS_API_USERNAME') && \defined('MODULE_PAYMENT_PAYPAL_EXPRESS_API_PASSWORD') && \defined('MODULE_PAYMENT_PAYPAL_EXPRESS_API_SIGNATURE')) {
           if (!\is_null(MODULE_PAYMENT_PAYPAL_EXPRESS_API_USERNAME) && !\is_null(MODULE_PAYMENT_PAYPAL_EXPRESS_API_PASSWORD) && !\is_null(MODULE_PAYMENT_PAYPAL_EXPRESS_API_SIGNATURE)) {
-            if (!\defined('CLICSHOPPING_APP_PAYPAL_' . $server . '_API_USERNAME') || !!\is_null(constant('CLICSHOPPING_APP_PAYPAL_' . $server . '_API_USERNAME'))) {
-              if (!\defined('CLICSHOPPING_APP_PAYPAL_' . $server . '_API_PASSWORD') || !!\is_null(constant('CLICSHOPPING_APP_PAYPAL_' . $server . '_API_PASSWORD'))) {
-                if (!\defined('CLICSHOPPING_APP_PAYPAL_' . $server . '_API_SIGNATURE') || !!\is_null(constant('CLICSHOPPING_APP_PAYPAL_' . $server . '_API_SIGNATURE'))) {
+            if (!\defined('CLICSHOPPING_APP_PAYPAL_' . $server . '_API_USERNAME') || !!\is_null(\constant('CLICSHOPPING_APP_PAYPAL_' . $server . '_API_USERNAME'))) {
+              if (!\defined('CLICSHOPPING_APP_PAYPAL_' . $server . '_API_PASSWORD') || !!\is_null(\constant('CLICSHOPPING_APP_PAYPAL_' . $server . '_API_PASSWORD'))) {
+                if (!\defined('CLICSHOPPING_APP_PAYPAL_' . $server . '_API_SIGNATURE') || !!\is_null(\constant('CLICSHOPPING_APP_PAYPAL_' . $server . '_API_SIGNATURE'))) {
                   $this->app->saveCfgParam('CLICSHOPPING_APP_PAYPAL_' . $server . '_API_USERNAME', MODULE_PAYMENT_PAYPAL_EXPRESS_API_USERNAME);
                   $this->app->saveCfgParam('CLICSHOPPING_APP_PAYPAL_' . $server . '_API_PASSWORD', MODULE_PAYMENT_PAYPAL_EXPRESS_API_PASSWORD);
                   $this->app->saveCfgParam('CLICSHOPPING_APP_PAYPAL_' . $server . '_API_SIGNATURE', MODULE_PAYMENT_PAYPAL_EXPRESS_API_SIGNATURE);
@@ -139,9 +139,9 @@
 
         if (\defined('MODULE_PAYMENT_PAYPAL_PRO_PAYFLOW_EC_VENDOR') && \defined('MODULE_PAYMENT_PAYPAL_PRO_PAYFLOW_EC_USERNAME') && \defined('MODULE_PAYMENT_PAYPAL_PRO_PAYFLOW_EC_PASSWORD') && \defined('MODULE_PAYMENT_PAYPAL_PRO_PAYFLOW_EC_PARTNER')) {
           if (!\is_null(MODULE_PAYMENT_PAYPAL_PRO_PAYFLOW_EC_VENDOR) && !\is_null(MODULE_PAYMENT_PAYPAL_PRO_PAYFLOW_EC_PASSWORD) && !\is_null(MODULE_PAYMENT_PAYPAL_PRO_PAYFLOW_EC_PARTNER)) {
-            if (!\defined('CLICSHOPPING_APP_PAYPAL_PF_' . $server . '_VENDOR') || !!\is_null(constant('CLICSHOPPING_APP_PAYPAL_PF_' . $server . '_VENDOR'))) {
-              if (!\defined('CLICSHOPPING_APP_PAYPAL_PF_' . $server . '_PASSWORD') || !!\is_null(constant('CLICSHOPPING_APP_PAYPAL_PF_' . $server . '_PASSWORD'))) {
-                if (!\defined('CLICSHOPPING_APP_PAYPAL_PF_' . $server . '_PARTNER') || !!\is_null(constant('CLICSHOPPING_APP_PAYPAL_PF_' . $server . '_PARTNER'))) {
+            if (!\defined('CLICSHOPPING_APP_PAYPAL_PF_' . $server . '_VENDOR') || !!\is_null(\constant('CLICSHOPPING_APP_PAYPAL_PF_' . $server . '_VENDOR'))) {
+              if (!\defined('CLICSHOPPING_APP_PAYPAL_PF_' . $server . '_PASSWORD') || !!\is_null(\constant('CLICSHOPPING_APP_PAYPAL_PF_' . $server . '_PASSWORD'))) {
+                if (!\defined('CLICSHOPPING_APP_PAYPAL_PF_' . $server . '_PARTNER') || !!\is_null(\constant('CLICSHOPPING_APP_PAYPAL_PF_' . $server . '_PARTNER'))) {
                   $this->app->saveCfgParam('CLICSHOPPING_APP_PAYPAL_PF_' . $server . '_VENDOR', MODULE_PAYMENT_PAYPAL_PRO_PAYFLOW_EC_VENDOR);
                   $this->app->saveCfgParam('CLICSHOPPING_APP_PAYPAL_PF_' . $server . '_USER', MODULE_PAYMENT_PAYPAL_PRO_PAYFLOW_EC_USERNAME);
                   $this->app->saveCfgParam('CLICSHOPPING_APP_PAYPAL_PF_' . $server . '_PASSWORD', MODULE_PAYMENT_PAYPAL_PRO_PAYFLOW_EC_PASSWORD);

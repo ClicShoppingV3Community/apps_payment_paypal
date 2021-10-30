@@ -15,7 +15,7 @@
 
   abstract class APIAbstract
   {
-    protected $app;
+    protected mixed $app;
     protected $type = 'paypal';
     protected $server = 'live';
     protected $url;
