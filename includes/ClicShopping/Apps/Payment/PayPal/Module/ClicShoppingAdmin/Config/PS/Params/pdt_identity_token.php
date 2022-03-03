@@ -13,7 +13,7 @@
 
   class pdt_identity_token extends \ClicShopping\Apps\Payment\PayPal\Module\ClicShoppingAdmin\Config\ConfigParamAbstract
   {
-    public $sort_order = 650;
+    public ?int $sort_order = 650;
 
     protected function init()
     {

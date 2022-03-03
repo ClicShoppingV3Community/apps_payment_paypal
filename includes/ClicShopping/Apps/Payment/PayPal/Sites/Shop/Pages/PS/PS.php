@@ -356,7 +356,7 @@
             $email_order .= TemplateEmail::getTemplateEmailSignature() . "\n\n";
             $email_order .= TemplateEmail::getTemplateEmailTextFooter() . "\n\n";
 
-            $CLICSHOPPING_Mail->clicMail($CLICSHOPPING_Order->customer['name'], $CLICSHOPPING_Order->customer['email_address'], CLICSHOPPING::getDef('email_text_subject', ['store_name' => STORE_NAME]), $email_order, STORE_OWNER, STORE_OWNER_EMAIL_ADDRESS);
+            $CLICSHOPPING_Mail->clicMail($CLICSHOPPING_Order->customer['email_address'], $CLICSHOPPING_Order->customer['name'], CLICSHOPPING::getDef('email_text_subject', ['store_name' => STORE_NAME]), $email_order, STORE_OWNER, STORE_OWNER_EMAIL_ADDRESS);
 
 // send emails to other people
 // SEND_EXTRA_ORDER_EMAILS_TO does'nt work like this, test<test@test.com>, just with test@test.com
@@ -367,7 +367,7 @@
               $text[] = TemplateEmail::getExtractEmailAddress(SEND_EXTRA_ORDER_EMAILS_TO);
 
               foreach ($text as $key => $email) {
-                $CLICSHOPPING_Mail->clicMail(null, $email[$key], $email_text_subject, $email_order, STORE_OWNER, STORE_OWNER_EMAIL_ADDRESS);
+                $CLICSHOPPING_Mail->clicMail($email[$key], null, $email_text_subject, $email_order, STORE_OWNER, STORE_OWNER_EMAIL_ADDRESS);
               }
             }
 
