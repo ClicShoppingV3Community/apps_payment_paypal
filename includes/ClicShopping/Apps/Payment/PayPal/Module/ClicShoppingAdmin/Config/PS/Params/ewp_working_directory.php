@@ -17,7 +17,7 @@
   {
 
     public $default = CLICSHOPPING::BASE_DIR . 'Work/Log/';
-    public $sort_order = 1200;
+    public ?int $sort_order = 1200;
 
     protected function init()
     {

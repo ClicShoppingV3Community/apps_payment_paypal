@@ -14,7 +14,7 @@
   class ewp_openssl extends \ClicShopping\Apps\Payment\PayPal\Module\ClicShoppingAdmin\Config\ConfigParamAbstract
   {
     public $default = '/usr/bin/openssl';
-    public $sort_order = 1300;
+    public ?int $sort_order = 1300;
 
     protected function init()
     {

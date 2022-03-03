@@ -13,7 +13,7 @@
 
   class ewp_private_key extends \ClicShopping\Apps\Payment\PayPal\Module\ClicShoppingAdmin\Config\ConfigParamAbstract
   {
-    public $sort_order = 800;
+    public ?int $sort_order = 800;
 
     protected function init()
     {

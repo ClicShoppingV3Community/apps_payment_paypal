@@ -13,7 +13,7 @@
 
   class ewp_public_cert_id extends \ClicShopping\Apps\Payment\PayPal\Module\ClicShoppingAdmin\Config\ConfigParamAbstract
   {
-    public $sort_order = 1000;
+    public ?int $sort_order = 1000;
 
     protected function init()
     {

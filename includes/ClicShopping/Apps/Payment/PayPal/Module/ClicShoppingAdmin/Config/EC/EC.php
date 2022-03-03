@@ -20,7 +20,7 @@
 
     public bool $is_uninstallable = true;
     public $is_migratable = true;
-    public $sort_order = 100;
+    public ?int $sort_order = 100;
 
     protected function init()
     {

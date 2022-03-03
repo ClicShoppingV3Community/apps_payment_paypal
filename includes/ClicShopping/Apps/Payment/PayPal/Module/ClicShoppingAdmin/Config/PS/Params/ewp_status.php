@@ -16,7 +16,7 @@
   class ewp_status extends \ClicShopping\Apps\Payment\PayPal\Module\ClicShoppingAdmin\Config\ConfigParamAbstract
   {
     public $default = '-1';
-    public $sort_order = 700;
+    public ?int $sort_order = 700;
 
     protected function init()
     {

@@ -493,7 +493,7 @@
                 $email_text .= TemplateEmail::getTemplateEmailSignature() . "\n\n";
                 $email_text .= TemplateEmail::getTemplateEmailTextFooter();
 
-                $CLICSHOPPING_Mail->clicMail($name, $email_address, CLICSHOPPING::getDef('email_text_subject', ['store_name' => STORE_NAME]), $email_text, STORE_OWNER, STORE_OWNER_EMAIL_ADDRESS);
+                $CLICSHOPPING_Mail->clicMail($email_address, $name, CLICSHOPPING::getDef('email_text_subject', ['store_name' => STORE_NAME]), $email_text, STORE_OWNER, STORE_OWNER_EMAIL_ADDRESS);
               }
             }
           }
