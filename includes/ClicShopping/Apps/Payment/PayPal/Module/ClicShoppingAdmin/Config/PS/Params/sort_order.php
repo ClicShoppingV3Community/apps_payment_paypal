@@ -13,7 +13,7 @@
 
   class sort_order extends \ClicShopping\Apps\Payment\PayPal\Module\ClicShoppingAdmin\Config\ConfigParamAbstract
   {
-    public $sort_order = 1000;
+    public ?int $sort_order = 1000;
     public $default = '0';
     public bool $app_configured = false;
 
