@@ -16,7 +16,7 @@
   class transaction_method extends \ClicShopping\Apps\Payment\PayPal\Module\ClicShoppingAdmin\Config\ConfigParamAbstract
   {
     public $default = '1';
-    public $sort_order = 300;
+    public ?int $sort_order = 300;
 
     protected function init()
     {

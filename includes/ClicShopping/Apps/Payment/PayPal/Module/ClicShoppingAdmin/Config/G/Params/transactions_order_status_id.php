@@ -16,7 +16,7 @@
   class transactions_order_status_id extends \ClicShopping\Apps\Payment\PayPal\Module\ClicShoppingAdmin\Config\ConfigParamAbstract
   {
     public $default = '0';
-    public $sort_order = 200;
+    public ?int $sort_order = 200;
 
     protected function init()
     {

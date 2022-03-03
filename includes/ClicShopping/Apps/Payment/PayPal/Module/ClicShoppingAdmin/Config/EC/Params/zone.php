@@ -16,7 +16,7 @@
   class zone extends \ClicShopping\Apps\Payment\PayPal\Module\ClicShoppingAdmin\Config\ConfigParamAbstract
   {
     public $default = '0';
-    public $sort_order = 900;
+    public ?int $sort_order = 900;
 
     protected function init()
     {
