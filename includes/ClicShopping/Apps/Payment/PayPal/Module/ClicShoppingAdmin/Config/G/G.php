@@ -13,8 +13,8 @@
 
   class G extends \ClicShopping\Apps\Payment\PayPal\Module\ClicShoppingAdmin\Config\ConfigAbstract
   {
-    public $is_installed = true;
-    public $sort_order = 100000;
+    public bool $is_installed = true;
+    public ?int $sort_order = 100000;
 
     protected function init()
     {

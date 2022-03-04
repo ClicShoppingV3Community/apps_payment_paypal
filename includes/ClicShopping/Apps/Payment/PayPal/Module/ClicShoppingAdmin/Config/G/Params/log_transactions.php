@@ -16,7 +16,7 @@
   class log_transactions extends \ClicShopping\Apps\Payment\PayPal\Module\ClicShoppingAdmin\Config\ConfigParamAbstract
   {
     public $default = '1';
-    public $sort_order = 500;
+    public ?int $sort_order = 500;
 
     protected function init()
     {

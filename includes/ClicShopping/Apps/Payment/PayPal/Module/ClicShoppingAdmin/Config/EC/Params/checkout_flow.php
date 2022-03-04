@@ -16,7 +16,7 @@
   class checkout_flow extends \ClicShopping\Apps\Payment\PayPal\Module\ClicShoppingAdmin\Config\ConfigParamAbstract
   {
     public $default = '1';
-    public $sort_order = 200;
+    public ?int $sort_order = 200;
 
     protected function init()
     {

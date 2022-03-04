@@ -16,7 +16,7 @@
   class checkout_image extends \ClicShopping\Apps\Payment\PayPal\Module\ClicShoppingAdmin\Config\ConfigParamAbstract
   {
     public $default = 'Static';
-    public $sort_order = 500;
+    public ?int $sort_order = 500;
 
     protected function init()
     {

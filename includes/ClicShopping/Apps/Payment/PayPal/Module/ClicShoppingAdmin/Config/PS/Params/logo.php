@@ -17,7 +17,7 @@
   class logo extends \ClicShopping\Apps\Payment\PayPal\Module\ClicShoppingAdmin\Config\ConfigParamAbstract
   {
     public $default = 'True';
-    public $sort_order = 110;
+    public ?int $sort_order = 110;
 
     protected function init()
     {

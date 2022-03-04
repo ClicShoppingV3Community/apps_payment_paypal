@@ -16,7 +16,7 @@
   class no_authorize extends \ClicShopping\Apps\Payment\PayPal\Module\ClicShoppingAdmin\Config\ConfigParamAbstract
   {
     public $default = 'True';
-    public $sort_order = 100;
+    public ?int $sort_order = 100;
 
     protected function init()
     {

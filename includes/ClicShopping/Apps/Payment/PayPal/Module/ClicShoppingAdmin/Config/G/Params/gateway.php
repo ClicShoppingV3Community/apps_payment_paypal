@@ -16,7 +16,7 @@
   class gateway extends \ClicShopping\Apps\Payment\PayPal\Module\ClicShoppingAdmin\Config\ConfigParamAbstract
   {
     public $default = '1';
-    public $sort_order = 100;
+    public ?int $sort_order = 100;
 
     protected function init()
     {

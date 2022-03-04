@@ -16,7 +16,7 @@
   class incontext_button_size extends \ClicShopping\Apps\Payment\PayPal\Module\ClicShoppingAdmin\Config\ConfigParamAbstract
   {
     public $default = '2';
-    public $sort_order = 220;
+    public ?int $sort_order = 220;
 
     protected function init()
     {

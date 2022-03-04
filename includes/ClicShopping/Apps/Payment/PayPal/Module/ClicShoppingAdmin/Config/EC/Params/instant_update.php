@@ -16,7 +16,7 @@
   class instant_update extends \ClicShopping\Apps\Payment\PayPal\Module\ClicShoppingAdmin\Config\ConfigParamAbstract
   {
     public $default = '1';
-    public $sort_order = 400;
+    public ?int $sort_order = 400;
 
     protected function init()
     {

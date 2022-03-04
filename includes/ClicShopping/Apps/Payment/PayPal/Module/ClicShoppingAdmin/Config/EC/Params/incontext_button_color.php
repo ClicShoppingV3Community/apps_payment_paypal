@@ -16,7 +16,7 @@
   class incontext_button_color extends \ClicShopping\Apps\Payment\PayPal\Module\ClicShoppingAdmin\Config\ConfigParamAbstract
   {
     public $default = '1';
-    public $sort_order = 210;
+    public ?int $sort_order = 210;
 
     protected function init()
     {

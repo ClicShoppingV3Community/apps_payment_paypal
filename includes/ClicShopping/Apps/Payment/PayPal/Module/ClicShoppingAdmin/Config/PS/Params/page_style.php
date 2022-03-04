@@ -13,7 +13,7 @@
 
   class page_style extends \ClicShopping\Apps\Payment\PayPal\Module\ClicShoppingAdmin\Config\ConfigParamAbstract
   {
-    public $sort_order = 200;
+    public ?int $sort_order = 200;
 
     protected function init()
     {

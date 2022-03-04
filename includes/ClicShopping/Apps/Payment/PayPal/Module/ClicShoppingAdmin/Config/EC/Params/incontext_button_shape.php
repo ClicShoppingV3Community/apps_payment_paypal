@@ -16,7 +16,7 @@
   class incontext_button_shape extends \ClicShopping\Apps\Payment\PayPal\Module\ClicShoppingAdmin\Config\ConfigParamAbstract
   {
     public $default = '1';
-    public $sort_order = 230;
+    public ?int $sort_order = 230;
 
     protected function init()
     {
