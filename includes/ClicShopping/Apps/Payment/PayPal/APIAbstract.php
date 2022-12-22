@@ -4,7 +4,7 @@
    * @copyright 2008 - https://www.clicshopping.org
    * @Brand : ClicShopping(Tm) at Inpi all right Reserved
    * @Licence GPL 2 & MIT
-   * @licence MIT - Portion of osCommerce 2.4
+
    * @Info : https://www.clicshopping.org/forum/trademark/
    *
    */
@@ -12,6 +12,7 @@
   namespace ClicShopping\Apps\Payment\PayPal;
 
   use ClicShopping\OM\Registry;
+  use ClicShopping\OM\CLICSHOPPING;
 
   abstract class APIAbstract
   {
@@ -54,7 +55,7 @@
       $post = [];
 
       foreach ($params as $key => $value) {
-        $value = utf8_encode(trim($value));
+        $value = CLICSHOPPING::utf8Encode(trim($value));
 
         if ($this->type == 'payflow') {
           $key = $key . '[' . \strlen($value) . ']';

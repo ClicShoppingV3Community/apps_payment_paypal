@@ -4,7 +4,7 @@
    * @copyright 2008 - https://www.clicshopping.org
    * @Brand : ClicShopping(Tm) at Inpi all right Reserved
    * @Licence GPL 2 & MIT
-   * @licence MIT - Portion of osCommerce 2.4
+
    * @Info : https://www.clicshopping.org/forum/trademark/
    *
    */
@@ -51,7 +51,7 @@
       $cut_length = \strlen('CLICSHOPPING_APP_PAYPAL_' . $this->code . '_');
 
       foreach ($this->getParameters() as $key) {
-        $p = strtolower(substr($key, $cut_length));
+        $p = mb_strtolower(substr($key, $cut_length));
 
         $class = 'ClicShopping\Apps\Payment\PayPal\Module\ClicShoppingAdmin\Config\\' . $this->code . '\Params\\' . $p;
 
@@ -113,7 +113,7 @@
       $cut_length = \strlen($cut);
 
       foreach ($this->getParameters() as $key) {
-        $p = strtolower(substr($key, $cut_length));
+        $p = mb_strtolower(substr($key, $cut_length));
 
         $class = 'ClicShopping\Apps\Payment\PayPal\Module\ClicShoppingAdmin\Config\\' . $this->code . '\Params\\' . $p;
 

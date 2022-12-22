@@ -4,7 +4,7 @@
    * @copyright 2008 - https://www.clicshopping.org
    * @Brand : ClicShopping(Tm) at Inpi all right Reserved
    * @Licence GPL 2 & MIT
-   * @licence MIT - Portion of osCommerce 2.4
+
    * @Info : https://www.clicshopping.org/forum/trademark/
    *
    */
@@ -38,7 +38,7 @@
         method="post">
 
     <?php
-      require_once(__DIR__ . '/credentials_' . strtolower($current_module) . '.php');
+      require_once(__DIR__ . '/credentials_' . mb_strtolower($current_module) . '.php');
     ?>
     <br/><br/>
     <div class="col-md-12 text-end">
